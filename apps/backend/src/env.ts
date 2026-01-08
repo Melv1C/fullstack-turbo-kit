@@ -8,7 +8,7 @@ const envSchema = z.object({
   CORS_ORIGINS: z
     .string()
     .default('http://localhost:5173')
-    .transform((val) => val.split(',')),
+    .transform(val => val.split(',')),
 });
 
 export const env = envSchema.parse(process.env);

@@ -12,15 +12,15 @@ const app = new Hono()
     cors({
       origin: env.CORS_ORIGINS,
       credentials: true,
-    })
+    }),
   )
-  .get('/api', (c) => {
+  .get('/api', c => {
     return c.json(
       {
         message: `Hello from ${APP_NAME} backend API!`,
         version: APP_VERSION,
       },
-      200
+      200,
     );
   })
   .get(
@@ -30,9 +30,9 @@ const app = new Hono()
       z.object({
         page: z.coerce.number().optional().default(1),
         limit: z.coerce.number().optional().default(10),
-      })
+      }),
     ),
-    (c) => {
+    c => {
       const { page, limit } = c.req.valid('query');
       return c.json(
         {
@@ -42,11 +42,11 @@ const app = new Hono()
           ],
           pagination: { page, limit, total: 2 },
         },
-        200
+        200,
       );
-    }
+    },
   )
-  .get('/api/posts/:id', (c) => {
+  .get('/api/posts/:id', c => {
     const id = c.req.param('id');
     const post = { id, title: 'Hello World', body: 'First post' };
     if (!post) {
@@ -61,9 +61,9 @@ const app = new Hono()
       z.object({
         title: z.string().min(1),
         body: z.string().min(1),
-      })
+      }),
     ),
-    (c) => {
+    c => {
       const { title, body } = c.req.valid('json');
       return c.json(
         {
@@ -71,9 +71,9 @@ const app = new Hono()
           message: 'Post created!',
           post: { id: crypto.randomUUID(), title, body },
         },
-        201
+        201,
       );
-    }
+    },
   );
 
 export type AppType = typeof app;
@@ -83,9 +83,9 @@ serve(
     fetch: app.fetch,
     port: env.PORT,
   },
-  (info) => {
+  info => {
     console.log(`🚀 Backend server running on port ${info.port}`);
     console.log(`   App Name: ${APP_NAME}`);
     console.log(`   App Version: ${APP_VERSION}`);
-  }
+  },
 );
