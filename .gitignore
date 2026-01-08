@@ -24,6 +24,7 @@ npm-debug.log*
 
 # IDE and Editor
 .vscode/
+!.vscode/settings.json
 !.vscode/launch.json
 !.vscode/*.code-snippets
 .idea/
