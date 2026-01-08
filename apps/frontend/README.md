@@ -1,32 +1,33 @@
-# frontend
+# Frontend
 
-A modern frontend application built with Vite and React.
+Modern web application built with [Vite](https://vitejs.dev/) and [React](https://react.dev/).
 
-## Getting Started
-
-### Development
+## Development
 
 ```bash
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`
+App runs at `http://localhost:5173`
 
-### Build
+## Build
 
 ```bash
 npm run build
 ```
 
-### Preview
-
-Preview the production build locally:
+## Preview
 
 ```bash
 npm run preview
 ```
 
-## Scripts
+## Tech Stack
+
+- **React** — UI library
+- **Vite** — Build tool & dev server
+- **TypeScript** — Type safety
+- **ESLint** — Code linting
 
 - `npm run dev` - Start development server with HMR
 - `npm run build` - Build for production
