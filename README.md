@@ -11,7 +11,7 @@ A production-ready [Turborepo](https://turbo.build/repo) monorepo starter with f
 
 ### Packages
 
-- **@repo/ui** — Shared React component library
+- **@repo/api-client** — Shared API client for frontend-backend communication
 - **@repo/utils** — Shared utility functions and constants
 - **@repo/eslint-config** — ESLint configurations
 - **@repo/typescript-config** — TypeScript configurations
@@ -34,48 +34,11 @@ Run all apps in development mode:
 npm run dev
 ```
 
-### Build
-
-Build all apps and packages:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
-
-### Develop```bash
-
-npm run build
-
-````
-
-### Lint
-
-Run linting across all packages:
-
-```bash
-npm run lint
-````
-
-### Type Check
-
-Run TypeScript type checking:
-
-```bash
-npm run check-types
-```
-
 ## CI/CD
 
 This project includes GitHub Actions workflows for:
 
-- **Code Quality** — Runs linting and type checking on pull requests
-- **Pipeline** — Builds and tests the project
+- **Pipeline** — Installation, linting, type checking, and testing + staging deployment on push to `main` branch
 - **Release** — Automated versioning and release process
 
 ## Release Process
@@ -95,7 +58,7 @@ apps/
   ├── backend/          # Hono API server
   └── frontend/         # Vite + React app
 packages/
-  ├── ui/               # Shared React components
+  ├── api-client/       # Shared API client for frontend-backend communication
   ├── utils/            # Shared utilities
   ├── eslint-config/    # ESLint configurations
   └── typescript-config/ # TypeScript configurations
