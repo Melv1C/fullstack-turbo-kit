@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useAPIHealth } from '../hooks/use-api-health';
+import { useAPIHealth } from '@/hooks/use-api-health';
 
 export const Route = createFileRoute('/')({
   component: Index,

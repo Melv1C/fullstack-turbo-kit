@@ -1,5 +1,5 @@
+import { apiClient } from '@/libs/api-client';
 import { useQuery } from '@tanstack/react-query';
-import { apiClient } from '../libs/api-client';
 
 export function useAPIHealth() {
   return useQuery({

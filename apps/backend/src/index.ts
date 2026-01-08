@@ -1,9 +1,9 @@
+import { env } from '@/libs/env';
+import { routes } from '@/routes';
 import { serve } from '@hono/node-server';
 import { APP_NAME, APP_VERSION } from '@repo/utils';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
-import { env } from './env';
-import { routes } from './routes';
 
 const app = new Hono()
   .use(
