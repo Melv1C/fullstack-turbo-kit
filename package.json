@@ -1,7 +1,6 @@
 {
-  "name": "my-turborepo",
-  "version": "1.0.0",
-  "private": true,
+  "name": "fullstack-turbo-kit",
+  "version": "0.0.0",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -24,5 +23,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "optionalDependencies": {
+    "@esbuild/darwin-arm64": "^0.27.2"
+  }
 }

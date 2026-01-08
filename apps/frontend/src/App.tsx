@@ -1,47 +1,23 @@
-import { Button } from "@repo/ui";
-import { useState } from "react";
-import "./App.css";
+import { Button } from '@repo/ui';
+import { APP_NAME, APP_VERSION } from '@repo/utils';
 
-function App() {
-  const [message, setMessage] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchFromBackend = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch("/api");
-      if (!response.ok) throw new Error("Failed to fetch");
-      const data = await response.json();
-      setMessage(data.message);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+export function App() {
   return (
     <div className="app">
       <header>
-        <h1>Welcome to Frontend</h1>
+        <h1>
+          Welcome to {APP_NAME} <small>v{APP_VERSION}</small>
+        </h1>
       </header>
       <main>
-        <Button onClick={fetchFromBackend} disabled={loading}>
-          {loading ? "Loading..." : "Get API Message"}
+        <p>This is the frontend application of your Turborepo setup.</p>
+
+        <Button
+          onClick={() => alert(`Hello from your ${APP_NAME} app!`)}
+        >
+          Click Me
         </Button>
-        {message && (
-          <p style={{ color: "#4CAF50", marginTop: "1rem" }}>✓ {message}</p>
-        )}
-        {error && (
-          <p style={{ color: "#f44336", marginTop: "1rem" }}>
-            ✗ Error: {error}
-          </p>
-        )}
       </main>
     </div>
   );
 }
-
-export default App;

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@repo/ui": "*",
+    "@repo/utils": "*",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

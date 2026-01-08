@@ -1,13 +1,12 @@
-import { serve } from "@hono/node-server";
-import { Hono } from "hono";
-import pkg from "../../../package.json" with { type: "json" };
+import { serve } from '@hono/node-server';
+import { Hono } from 'hono';
+import { APP_NAME, APP_VERSION } from '@repo/utils';
 
 const app = new Hono();
-const APP_VERSION = pkg.version;
 
-app.get("/api", (c) => {
+app.get('/api', (c) => {
   return c.json({
-    message: "Hello from the backend API!",
+    message: `Hello from ${APP_NAME} backend API!`,
     version: APP_VERSION,
   });
 });
@@ -18,6 +17,8 @@ serve(
     port: 3000,
   },
   (info) => {
-    console.log(`Server is running on http://localhost:${info.port}`);
-  },
+    console.log(`🚀 Backend server running on port ${info.port}`);
+    console.log(`   App Name: ${APP_NAME}`);
+    console.log(`   App Version: ${APP_VERSION}`);
+  }
 );
