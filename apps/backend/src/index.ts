@@ -1,6 +1,7 @@
 import { serve } from '@hono/node-server';
-import { Hono } from 'hono';
 import { APP_NAME, APP_VERSION } from '@repo/utils';
+import { Hono } from 'hono';
+import { env } from './env';
 
 const app = new Hono();
 
@@ -14,7 +15,7 @@ app.get('/api', (c) => {
 serve(
   {
     fetch: app.fetch,
-    port: 3000,
+    port: env.PORT,
   },
   (info) => {
     console.log(`🚀 Backend server running on port ${info.port}`);

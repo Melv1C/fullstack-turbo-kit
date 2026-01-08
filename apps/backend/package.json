@@ -11,7 +11,9 @@
   "dependencies": {
     "@hono/node-server": "^1.19.6",
     "@repo/utils": "*",
-    "hono": "^4.11.3"
+    "dotenv": "^16.0.3",
+    "hono": "^4.11.3",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
