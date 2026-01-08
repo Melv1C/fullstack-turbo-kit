@@ -1,10 +1,15 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
+import pkg from "../../../package.json" with { type: "json" };
 
 const app = new Hono();
+const APP_VERSION = pkg.version;
 
 app.get("/api", (c) => {
-  return c.json({ message: "Hello from the backend API!" });
+  return c.json({
+    message: "Hello from the backend API!",
+    version: APP_VERSION,
+  });
 });
 
 serve(
