@@ -8,6 +8,7 @@ A production-ready [Turborepo](https://turbo.build/repo) monorepo starter with f
 
 - **backend** — [Hono](https://hono.dev/) API server
 - **frontend** — [Vite](https://vitejs.dev/) + [React](https://react.dev/) application
+- **admin** — Vite + React admin application
 
 ### Packages
 
@@ -15,6 +16,7 @@ A production-ready [Turborepo](https://turbo.build/repo) monorepo starter with f
 - **@repo/utils** — Shared utility functions and constants
 - **@repo/eslint-config** — ESLint configurations
 - **@repo/typescript-config** — TypeScript configurations
+- **@repo/ui** — Shared UI components and design system
 
 All packages and apps are written in [TypeScript](https://www.typescriptlang.org/).
 
@@ -55,10 +57,12 @@ npm run release:major  # 1.0.0 → 2.0.0
 
 ```
 apps/
+  ├── admin/            # Vite + React admin app
   ├── backend/          # Hono API server
   └── frontend/         # Vite + React app
 packages/
   ├── api-client/       # Shared API client for frontend-backend communication
+  ├── ui/               # Shared UI components
   ├── utils/            # Shared utilities
   ├── eslint-config/    # ESLint configurations
   └── typescript-config/ # TypeScript configurations
