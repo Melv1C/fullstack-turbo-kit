@@ -1,8 +1,3 @@
-import reactConfig from '@repo/eslint-config/react-internal.js';
+import { config } from '@repo/eslint-config/react-internal';
 
-export default [
-  {
-    ignores: ['dist', 'node_modules', '*.gen.ts'],
-  },
-  ...reactConfig,
-];
+export default [{ ignores: ['src/routeTree.gen.ts'] }, ...config];
