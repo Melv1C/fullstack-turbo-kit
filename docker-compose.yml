@@ -11,7 +11,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - CORS_ORIGINS=http://localhost:8081
+      - CORS_ORIGINS=http://localhost:8081,http://localhost:8082
     networks:
       - fullstack-network
     restart: unless-stopped
@@ -29,6 +29,22 @@ services:
     container_name: fullstack-frontend
     ports:
       - '8081:80'
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      - MY_APP_API_URL=http://backend:3000
+    networks:
+      - fullstack-network
+    restart: unless-stopped
+
+  admin:
+    build:
+      context: .
+      dockerfile: apps/admin/Dockerfile
+    container_name: fullstack-admin
+    ports:
+      - '8082:80'
     depends_on:
       backend:
         condition: service_healthy
