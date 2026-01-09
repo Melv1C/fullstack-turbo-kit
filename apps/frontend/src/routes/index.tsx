@@ -1,6 +1,6 @@
 import { useAPIHealth } from '@/hooks/use-api-health';
 import { Button } from '@melv1c/ui-kit';
-import { Logo } from '@repo/ui';
+import { Logo, RedButton } from '@repo/ui';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/')({
@@ -23,6 +23,8 @@ function Index() {
       </div>
 
       <Button onClick={() => alert('Button from UI Kit clicked!')}>Click Me</Button>
+
+      <RedButton />
     </div>
   );
 }
