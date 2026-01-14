@@ -1,10 +1,14 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
+  "envMode": "strict",
+  "globalEnv": ["NODE_ENV", "DATABASE_URL"],
+  "globalDependencies": [".env*"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "env": ["VITE_*", "NEXT_PUBLIC_*"],
+      "inputs": ["$TURBO_DEFAULT$"],
       "outputs": ["dist/**"]
     },
     "lint": {
@@ -12,6 +16,19 @@
     },
     "check-types": {
       "dependsOn": ["^build", "^check-types"]
+    },
+    "generate": {
+      "cache": false
+    },
+    "migrate": {
+      "cache": false,
+      "persistent": true
+    },
+    "migrate:deploy": {
+      "cache": false
+    },
+    "validate": {
+      "cache": false
     },
     "dev": {
       "cache": false,

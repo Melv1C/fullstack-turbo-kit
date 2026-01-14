@@ -21,7 +21,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
@@ -33,7 +33,17 @@ jobs:
       - name: Run Format check
         run: npm run format:check
 
-      - name: Type checking
+      - name: Prisma Check
+        run: npm run validate
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+
+      - name: Prisma Generate
+        run: npm run generate
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+
+      - name: Run type checks
         run: npm run check-types
 
       - name: Build all packages
