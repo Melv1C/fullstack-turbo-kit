@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 
 export const LogType$ = z.enum(['REQUEST', 'APP']);
 export type LogType = z.infer<typeof LogType$>;
