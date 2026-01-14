@@ -30,9 +30,13 @@ jobs:
 
       - name: Prisma Check
         run: npm run validate
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
 
       - name: Prisma Generate
         run: npm run generate
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
 
       - name: Run type checks
         run: npm run check-types
