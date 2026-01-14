@@ -33,14 +33,14 @@ jobs:
       - name: Run Format check
         run: npm run format:check
 
-      - name: Type checking
-        run: npm run check-types
-
       - name: Prisma Check
         run: npm run validate
 
       - name: Prisma Generate
         run: npm run generate
+
+      - name: Run type checks
+        run: npm run check-types
 
       - name: Build all packages
         run: npm run build
