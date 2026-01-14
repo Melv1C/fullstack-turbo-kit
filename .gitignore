@@ -37,3 +37,6 @@ npm-debug.log*
 
 # Turbo
 .turbo/
+
+# Generated files
+generated/
