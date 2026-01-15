@@ -1,7 +1,6 @@
 import { signIn } from '@/lib/auth-client';
-import { LoginForm, type LoginProvider } from '@melv1c/ui-kit';
+import { LoginForm } from '@melv1c/ui-kit';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useState } from 'react';
 
 export const Route = createFileRoute('/login')({
   component: LoginPage,
@@ -9,30 +8,19 @@ export const Route = createFileRoute('/login')({
 
 function LoginPage() {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (email: string, password: string) => {
-    setIsLoading(true);
-    try {
-      await signIn.email({ email, password });
-      navigate({ to: '/' });
-    } catch (error) {
-      console.error('Login failed:', error);
-    } finally {
-      setIsLoading(false);
+    console.log('Attempting login with', email);
+    const result = await signIn.email({ email, password });
+    if (result.error) {
+      throw new Error(result.error.message);
     }
+    navigate({ to: '/' });
   };
 
-  const handleProviderLogin = async (provider: LoginProvider) => {
-    setIsLoading(true);
-    try {
-      await signIn.social({ provider });
-    } catch (error) {
-      console.error(`${provider} login failed:`, error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // const handleProviderLogin = async (provider: LoginProvider) => {
+  //   await signIn.social({ provider });
+  // };
 
   return (
     <div className="flex min-h-screen items-center justify-center">
@@ -40,11 +28,8 @@ function LoginPage() {
         title="Admin Login"
         description="Sign in to access the admin dashboard"
         onSubmit={handleSubmit}
-        onProviderLogin={handleProviderLogin}
-        providers={['google']}
         showForgotPassword={false}
         showSignUp={false}
-        isLoading={isLoading}
       />
     </div>
   );

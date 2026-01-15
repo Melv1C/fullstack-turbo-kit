@@ -22,6 +22,6 @@
     "react-dom": "^19.2.3"
   },
   "dependencies": {
-    "@melv1c/ui-kit": "^1.2.0"
+    "@melv1c/ui-kit": "^1.2.2"
   }
 }

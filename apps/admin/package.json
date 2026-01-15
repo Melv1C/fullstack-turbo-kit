@@ -9,7 +9,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@melv1c/ui-kit": "^1.2.0",
+    "@melv1c/ui-kit": "^1.2.2",
     "@repo/api-client": "*",
     "@repo/ui": "*",
     "@repo/utils": "*",
