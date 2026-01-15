@@ -1,6 +1,5 @@
 import { env } from '@/lib/env';
 import { prisma } from '@repo/database';
-import { syncJsonData } from './seeders/json-sync';
 import { seedUsers } from './seeders/users';
 import type { SeedContext } from './types';
 
