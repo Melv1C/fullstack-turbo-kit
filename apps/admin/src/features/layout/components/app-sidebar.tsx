@@ -5,10 +5,12 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@melv1c/ui-kit';
+import { APP_NAME } from '@repo/utils';
 import { Link, useRouterState } from '@tanstack/react-router';
 import { NavItem } from '../type';
 import { NavUser } from './nav-user';
@@ -23,6 +25,11 @@ export function AppSidebar({ navItems, ...props }: AppSidebarProps) {
 
   return (
     <Sidebar variant="inset" {...props}>
+      <SidebarHeader>
+        <div className="flex items-center gap-2 px-2 py-1">
+          <span className="text-lg font-semibold">{APP_NAME}</span>
+        </div>
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
