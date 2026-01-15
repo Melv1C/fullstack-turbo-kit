@@ -14,7 +14,7 @@ export type Method = z.infer<typeof Method$>;
 export const LogStep$ = z.object({
   level: LogLevel$,
   message: z.string(),
-  metadata: z.json().default({}),
+  metadata: z.any().default({}),
   timestamp: z.number(),
 });
 export type LogStep = z.infer<typeof LogStep$>;
@@ -24,7 +24,7 @@ export const Log$ = z.object({
   type: LogType$,
   level: LogLevel$,
   message: z.string(),
-  metadata: z.json().default({}),
+  metadata: z.any().default({}),
 
   userId: z.uuid().nullish(),
   method: Method$.nullish(),

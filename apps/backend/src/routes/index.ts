@@ -1,4 +1,6 @@
-import { logger } from '@/libs/logger';
+import { auth } from '@/lib/auth';
+import { logger } from '@/lib/logger';
+import { useAuth } from '@/middlewares/use-auth';
 import { requestLogger } from '@repo/logger';
 import { Hono } from 'hono';
 import { healthRoutes } from './health';
@@ -11,7 +13,7 @@ export const routes = new Hono()
   .route('/logs', logsRoutes)
   //////////////////////////////////////////////////
   // Add routes without logging middleware here
-
+  .on(['POST', 'GET'], '/auth/*', c => auth.handler(c.req.raw))
   //////////////////////////////////////////////////
   .use('*', requestLogger(logger))
   //////////////////////////////////////////////////
