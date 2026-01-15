@@ -1,12 +1,14 @@
 import { logger } from '@/libs/logger';
 import { requestLogger } from '@repo/logger';
 import { Hono } from 'hono';
-import { getLogsRouter } from './get-logs';
-import { healthRouter } from './health';
+import { healthRoutes } from './health';
+import { logsRoutes } from './logs';
 
 export const routes = new Hono()
-  .route('/health', healthRouter)
-  .route('/logs', getLogsRouter)
+  .use(useAuth)
+
+  .route('/health', healthRoutes)
+  .route('/logs', logsRoutes)
   //////////////////////////////////////////////////
   // Add routes without logging middleware here
 

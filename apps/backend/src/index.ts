@@ -1,4 +1,4 @@
-import { env } from '@/libs/env';
+import { env } from '@/lib/env';
 import { routes } from '@/routes';
 import { serve } from '@hono/node-server';
 import { APP_NAME, APP_VERSION } from '@repo/utils';
@@ -8,7 +8,7 @@ import { cors } from 'hono/cors';
 const app = new Hono()
   .use(
     cors({
-      origin: env.CORS_ORIGINS,
+      origin: [env.FRONTEND_URL, env.ADMIN_URL],
       credentials: true,
     }),
   )
