@@ -6,4 +6,4 @@
 
 /* Import base theme structure */
 @import '@melv1c/ui-kit/base.css';
-@import '@melv1c/ui-kit/themes/claude.css';
+@import '@melv1c/ui-kit/themes/default.css';

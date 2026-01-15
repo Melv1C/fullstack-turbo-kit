@@ -34,6 +34,36 @@ export const useAuth = async (c: Context, next: Next) => {
   await next();
 };
 
+export const useAuthFromBearer = async (c: Context, next: Next) => {
+  const authHeader = c.req.header('Authorization');
+  const token = authHeader?.replace('Bearer ', '');
+
+  if (!token) {
+    return c.json({ error: 'Authorization header required' }, 401);
+  }
+
+  const sessionData = await auth.api.getSession({
+    headers: new Headers({ Authorization: `Bearer ${token}` }),
+  });
+
+  console.log('Session data from bearer token:', sessionData);
+
+  const user = sessionData?.user ? User$.safeParse(sessionData.user) : null;
+
+  if (user && !user.success) {
+    logger.error('Invalid user data in session from bearer token', {
+      metadata: { error: user.error.message },
+    });
+    throw user.error;
+  }
+
+
+  c.set('session', sessionData?.session || null);
+  c.set('user', user?.data || null);
+
+  await next();
+};
+
 export const isAuthenticated = async (c: Context, next: Next) => {
   const user = c.get('user');
 
@@ -61,7 +91,7 @@ export const isAdmin = async (c: Context, next: Next) => {
     return c.json({ error: 'Authentication required' }, 401);
   }
 
-  if (user.name !== 'admin') {
+  if (user.role !== 'admin') {
     if (c.get('logStep')) {
       c.get('logStep').error('Admin role required but user is not an admin', {
         user,

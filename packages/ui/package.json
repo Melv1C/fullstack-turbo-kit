@@ -11,7 +11,7 @@
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
-    "@types/node": "^25.0.8",
+    "@types/node": "^25.0.9",
     "@types/react": "19.2.8",
     "@types/react-dom": "19.2.3",
     "eslint": "^9.39.2",
@@ -22,6 +22,6 @@
     "react-dom": "^19.2.3"
   },
   "dependencies": {
-    "@melv1c/ui-kit": "^1.2.2"
+    "@melv1c/ui-kit": "^1.3.0"
   }
 }

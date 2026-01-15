@@ -1,3 +1,4 @@
+import { AdminLayout } from '@/features/layout';
 import { authClient } from '@/lib/auth-client';
 import { LocaleProvider } from '@melv1c/ui-kit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -24,16 +25,18 @@ export const Route = createRootRoute({
     if (session && !isAdmin && !isPublicPage) {
       throw redirect({ to: '/unauthorized' });
     }
+
+    return { isPublicPage };
   },
   component: RootComponent,
 });
 
 function RootComponent() {
+  const { isPublicPage } = Route.useRouteContext();
+
   return (
     <QueryClientProvider client={queryClient}>
-      <LocaleProvider language="en">
-        <Outlet />
-      </LocaleProvider>
+      <LocaleProvider language="en">{isPublicPage ? <Outlet /> : <AdminLayout />}</LocaleProvider>
       <ReactQueryDevtools initialIsOpen={false} />
       <TanStackRouterDevtools />
     </QueryClientProvider>
