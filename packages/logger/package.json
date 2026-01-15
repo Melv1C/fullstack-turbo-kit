@@ -10,15 +10,15 @@
   },
   "dependencies": {
     "@repo/database": "*",
-    "winston": "^3.17.0",
+    "winston": "^3.19.0",
     "winston-transport": "^4.9.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
-    "@types/node": "^25.0.3",
+    "@types/node": "^25.0.8",
     "eslint": "^9.39.2",
-    "hono": "^4.11.3",
+    "hono": "^4.11.4",
     "typescript": "5.9.3"
   },
   "peerDependencies": {

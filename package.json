@@ -17,8 +17,8 @@
     "release:major": "npm version major && git push --follow-tags origin main"
   },
   "devDependencies": {
-    "prettier": "^3.7.4",
-    "turbo": "^2.7.3",
+    "prettier": "^3.8.0",
+    "turbo": "^2.7.4",
     "typescript": "5.9.3"
   },
   "packageManager": "npm@11.7.0",
