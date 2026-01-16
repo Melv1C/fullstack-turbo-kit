@@ -1,4 +1,4 @@
-import { NodeEnv } from '@repo/utils';
+import type { NodeEnv } from '@repo/utils';
 
 export interface SeedContext {
   env: NodeEnv;

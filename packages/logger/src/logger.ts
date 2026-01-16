@@ -1,4 +1,4 @@
-import { NodeEnv } from '@repo/utils';
+import type { NodeEnv } from '@repo/utils';
 import winston from 'winston';
 import { PostgresTransport } from './postgres-transport';
 

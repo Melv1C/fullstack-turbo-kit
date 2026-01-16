@@ -12,7 +12,7 @@ import {
 } from '@melv1c/ui-kit';
 import { APP_NAME } from '@repo/utils';
 import { Link, useRouterState } from '@tanstack/react-router';
-import { NavItem } from '../type';
+import type { NavItem } from '../type';
 import { NavUser } from './nav-user';
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {

@@ -1,10 +1,17 @@
 {
   "name": "@repo/logger",
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
   "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsup",
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit"
   },
@@ -19,6 +26,7 @@
     "@types/node": "^25.0.9",
     "eslint": "^9.39.2",
     "hono": "^4.11.4",
+    "tsup": "^8.5.1",
     "typescript": "5.9.3"
   },
   "peerDependencies": {

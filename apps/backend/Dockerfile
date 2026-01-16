@@ -7,14 +7,16 @@ FROM base AS prepare
 RUN npm install -g turbo@^2
 COPY . .
 # Prune the monorepo for the backend app
-RUN turbo prune api --docker
+RUN turbo prune backend --docker
 
 # ---
 FROM base AS installer
 # First install the dependencies (as they change less often)
 COPY --from=prepare /app/out/json/ .
-COPY --from=prepare /app/out/package-lock.json ./package-lock.json
-RUN npm ci
+# Remove package-lock.json to avoid conflicts
+RUN rm -f package-lock.json
+# Install dependencies
+RUN npm i
 
 # ---
 FROM base AS builder
@@ -23,13 +25,9 @@ COPY --from=installer /app/ .
 # Copy source files
 COPY --from=prepare /app/out/full/ .
 
-# Uncomment and use build args to enable remote caching
-# ARG TURBO_TEAM
-# ENV TURBO_TEAM=$TURBO_TEAM
-# ARG TURBO_TOKEN
-# ENV TURBO_TOKEN=$TURBO_TOKEN
-
-RUN npm run build -- --filter=api
+# Build backend
+ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres"
+RUN npm run build -- --filter=backend
 
 # ---
 FROM base AS runner
@@ -43,13 +41,7 @@ WORKDIR /app
 # Copy built application
 COPY --from=builder --chown=nodejs:nodejs /app/apps/backend/dist ./apps/backend/dist
 COPY --from=builder --chown=nodejs:nodejs /app/apps/backend/package.json ./apps/backend/package.json
-COPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=nodejs:nodejs /app/packages ./packages
-
-# Set environment variables
-ENV NODE_ENV=production
-ENV PORT=3000
-
-EXPOSE 3000
+COPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules
 
 CMD ["npm", "start", "--prefix", "apps/backend"]

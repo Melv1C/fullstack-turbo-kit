@@ -13,8 +13,10 @@ RUN turbo prune frontend --docker
 FROM base AS installer
 # First install the dependencies (as they change less often)
 COPY --from=prepare /app/out/json/ .
-COPY --from=prepare /app/out/package-lock.json ./package-lock.json
-RUN npm ci
+# Remove package-lock.json to avoid conflicts
+RUN rm -f package-lock.json
+# Install dependencies
+RUN npm i
 
 # ---
 FROM base AS builder
@@ -27,6 +29,7 @@ COPY --from=prepare /app/out/full/ .
 COPY apps/frontend/.env.docker apps/frontend/.env
 
 # Build the frontend
+ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres"
 RUN npm run build -- --filter=frontend
 
 # ---

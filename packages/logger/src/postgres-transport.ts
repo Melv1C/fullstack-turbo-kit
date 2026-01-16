@@ -1,9 +1,9 @@
 import { prisma } from '@repo/database';
-import { LogCreate, LogCreate$ } from '@repo/utils';
+import { type LogCreate, LogCreate$ } from '@repo/utils';
 import Transport from 'winston-transport';
 
 export class PostgresTransport extends Transport {
-  async log(info: LogCreate, callback: () => void) {
+  override async log(info: LogCreate, callback: () => void) {
     setImmediate(callback);
 
     const { level, message, type, userId, metadata, method, path, statusCode, durationMs, steps } =
@@ -15,7 +15,7 @@ export class PostgresTransport extends Transport {
           type,
           level,
           message,
-          userId,
+          userId: userId ?? undefined,
           metadata: metadata ?? undefined,
           method,
           path,

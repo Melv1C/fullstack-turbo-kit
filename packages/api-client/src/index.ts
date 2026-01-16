@@ -1,4 +1,4 @@
-import type { AppType } from 'api';
+import type { AppType } from 'backend';
 import { hc, type InferRequestType, type InferResponseType } from 'hono/client';
 
 // Pre-computed client type for better IDE performance

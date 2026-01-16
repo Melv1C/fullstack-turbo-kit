@@ -10,7 +10,7 @@ import {
 } from '@melv1c/ui-kit';
 import { Outlet, useRouterState } from '@tanstack/react-router';
 import { Database, FileText, LayoutDashboard } from 'lucide-react';
-import { NavItem } from '../type';
+import type { NavItem } from '../type';
 import { AppSidebar } from './app-sidebar';
 
 const navItems: NavItem[] = [

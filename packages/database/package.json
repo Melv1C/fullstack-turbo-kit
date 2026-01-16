@@ -1,10 +1,21 @@
 {
   "name": "@repo/database",
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./generated/prisma/client": {
+      "types": "./generated/prisma/client.d.ts",
+      "import": "./generated/prisma/client.js"
+    }
   },
   "scripts": {
+    "dev": "tsc --watch",
+    "build": "npm run generate && tsc",
     "generate": "prisma generate",
     "migrate": "prisma migrate dev",
     "migrate:deploy": "prisma migrate deploy",

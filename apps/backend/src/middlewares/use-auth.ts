@@ -1,7 +1,7 @@
 import { auth } from '@/lib/auth';
 import { logger } from '@/lib/logger';
-import { Session, User, User$ } from '@repo/utils';
-import { Context, Next } from 'hono';
+import { type Session, type User, User$ } from '@repo/utils';
+import type { Context, Next } from 'hono';
 
 declare module 'hono' {
   interface ContextVariableMap {
