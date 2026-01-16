@@ -10,7 +10,6 @@ function LoginPage() {
   const navigate = useNavigate();
 
   const handleSubmit = async (email: string, password: string) => {
-    console.log('Attempting login with', email);
     const result = await signIn.email({ email, password });
     if (result.error) {
       throw new Error(result.error.message);

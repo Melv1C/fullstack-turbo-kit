@@ -20,7 +20,6 @@ const envSchema = z.object({
   BETTER_AUTH_SECRET: z.string().min(32, 'BETTER_AUTH_SECRET must be at least 32 characters'),
 });
 
-console.log('Loaded Environment Variables:', process.env);
 export const env = envSchema.parse(process.env);
 
 export type Env = z.infer<typeof envSchema>;
