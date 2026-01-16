@@ -16,7 +16,6 @@ export const User$ = z.object({
   banned: Boolean$.nullish(),
   banReason: z.string().nullish(),
   banExpires: Date$.nullish(),
-  stripeCustomerId: z.string().nullish(),
 });
 export type User = z.infer<typeof User$>;
 
@@ -30,6 +29,5 @@ export const Session$ = z.object({
   userAgent: z.string().nullish(),
   userId: BetterAuthId$,
   impersonatedBy: BetterAuthId$.nullish(),
-  activeOrganizationId: BetterAuthId$.nullish(),
 });
 export type Session = z.infer<typeof Session$>;
