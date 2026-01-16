@@ -57,7 +57,6 @@ export const useAuthFromBearer = async (c: Context, next: Next) => {
     throw user.error;
   }
 
-
   c.set('session', sessionData?.session || null);
   c.set('user', user?.data || null);
 
