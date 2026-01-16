@@ -24,8 +24,5 @@
   },
   "dependencies": {
     "zod": "^4.3.5"
-  },
-  "optionalDependencies": {
-    "@rollup/rollup-linux-x64-musl": "4.55.1"
   }
 }

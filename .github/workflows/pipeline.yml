@@ -25,7 +25,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: rm -rf node_modules package-lock.json && npm install
+        run: npm ci
 
       - name: Linting
         run: npm run lint
@@ -38,13 +38,10 @@ jobs:
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
 
-      - name: Prisma Generate
-        run: npm run generate
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
-
       - name: Run type checks
         run: npm run check-types
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
 
       - name: Build all packages
         run: npm run build
