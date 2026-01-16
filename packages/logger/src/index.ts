@@ -1,2 +1,2 @@
-export { requestLogger } from './hono-middleware';
+export { requestLogger, type StepLogger } from './hono-middleware';
 export { createLogger } from './logger';

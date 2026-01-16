@@ -2,14 +2,16 @@ import { levelPriority, type LogLevel, type LogStep } from '@repo/utils';
 import type { Context, Next } from 'hono';
 import { Logger } from 'winston';
 
+export type StepLogger = {
+  debug: (message: LogStep['message'], metadata?: LogStep['metadata']) => void;
+  info: (message: LogStep['message'], metadata?: LogStep['metadata']) => void;
+  warn: (message: LogStep['message'], metadata?: LogStep['metadata']) => void;
+  error: (message: LogStep['message'], metadata?: LogStep['metadata']) => void;
+};
+
 declare module 'hono' {
   interface ContextVariableMap {
-    logStep: {
-      debug: (message: LogStep['message'], metadata?: LogStep['metadata']) => void;
-      info: (message: LogStep['message'], metadata?: LogStep['metadata']) => void;
-      warn: (message: LogStep['message'], metadata?: LogStep['metadata']) => void;
-      error: (message: LogStep['message'], metadata?: LogStep['metadata']) => void;
-    };
+    logStep: StepLogger;
   }
 }
 
