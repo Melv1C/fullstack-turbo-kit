@@ -23,6 +23,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       port: env.VITE_PORT,
+      strictPort: true,
       proxy: {
         '/api': env.VITE_BACKEND_URL,
       },
