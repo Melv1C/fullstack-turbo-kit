@@ -13,6 +13,8 @@ jobs:
   ci-cd:
     name: Build, Check & Deploy
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
 
     steps:
       - name: Checkout code
@@ -35,18 +37,12 @@ jobs:
 
       - name: Prisma Check
         run: npm run validate
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
 
       - name: Prisma Generate
         run: npm run generate
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
 
       - name: Run type checks
         run: npm run check-types
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
 
       - name: Build all packages
         run: npm run build
