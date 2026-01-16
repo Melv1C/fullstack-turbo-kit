@@ -33,7 +33,7 @@ services:
       backend:
         condition: service_healthy
     environment:
-      - MY_APP_API_URL=http://backend:3000
+      - MY_APP_BACKEND_URL=http://backend:3000
     networks:
       - fullstack-network
     restart: unless-stopped
@@ -49,7 +49,7 @@ services:
       backend:
         condition: service_healthy
     environment:
-      - MY_APP_API_URL=http://backend:3000
+      - MY_APP_BACKEND_URL=http://backend:3000
     networks:
       - fullstack-network
     restart: unless-stopped

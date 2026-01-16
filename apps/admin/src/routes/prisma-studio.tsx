@@ -13,7 +13,7 @@ export const Route = createFileRoute('/prisma-studio')({
 function PrismaStudioPage() {
   const adapter = useMemo(() => {
     const executor = createStudioBFFClient({
-      url: `${env.VITE_API_URL}/api/studio`,
+      url: `${env.VITE_BACKEND_URL}/api/studio`,
       // fetch: (input, init) => {
       //   return fetch(input, { ...init, credentials: 'include' });
       // },

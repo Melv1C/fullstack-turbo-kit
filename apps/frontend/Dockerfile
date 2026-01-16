@@ -23,11 +23,8 @@ COPY --from=installer /app/ .
 # Copy source files
 COPY --from=prepare /app/out/full/ .
 
-# Uncomment and use build args to enable remote caching
-# ARG TURBO_TEAM
-# ENV TURBO_TEAM=$TURBO_TEAM
-# ARG TURBO_TOKEN
-# ENV TURBO_TOKEN=$TURBO_TOKEN
+# Copy the Docker-specific environment file
+COPY apps/frontend/.env.docker apps/frontend/.env
 
 # Build the frontend
 RUN npm run build -- --filter=frontend
