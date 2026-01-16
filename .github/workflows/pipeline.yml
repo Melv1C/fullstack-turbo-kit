@@ -49,13 +49,91 @@ jobs:
       - name: Build all packages
         run: npm run build
 
-      - name: Deploy to Staging
+      - name: Set up Docker Buildx
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: echo "Deploying to Staging environment..."
-        # Add your staging deployment commands here
-        # Example:
-        # - name: Deploy backend
-        #   run: npm run deploy:backend -- --env staging
-        #
-        # - name: Deploy frontend
-        #   run: npm run deploy:frontend -- --env staging
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Admin image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./apps/admin/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/fullstack-turbo-kit-admin:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/fullstack-turbo-kit-admin:${{ github.sha }}
+          platforms: linux/amd64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push Backend image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./apps/backend/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/fullstack-turbo-kit-backend:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/fullstack-turbo-kit-backend:${{ github.sha }}
+          platforms: linux/amd64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push Frontend image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./apps/frontend/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/fullstack-turbo-kit-frontend:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/fullstack-turbo-kit-frontend:${{ github.sha }}
+          platforms: linux/amd64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # - name: Trigger Dokploy Admin Deployment
+      #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      #   run: |
+      #     curl -X 'POST' \
+      #     '${{ secrets.DOKPLOY_DOMAIN }}/api/application.deploy' \
+      #     -H 'accept: application/json' \
+      #     -H 'x-api-key: ${{ secrets.DOKPLOY_API_KEY }}' \
+      #     -H 'Content-Type: application/json' \
+      #     -d '{
+      #          "applicationId": "${{ secrets.DOKPLOY_ADMIN_APP_ID }}"
+      #       }'
+
+      # - name: Trigger Dokploy Backend Deployment
+      #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      #   run: |
+      #     curl -X 'POST' \
+      #     '${{ secrets.DOKPLOY_DOMAIN }}/api/application.deploy' \
+      #     -H 'accept: application/json' \
+      #     -H 'x-api-key: ${{ secrets.DOKPLOY_API_KEY }}' \
+      #     -H 'Content-Type: application/json' \
+      #     -d '{
+      #          "applicationId": "${{ secrets.DOKPLOY_BACKEND_APP_ID }}"
+      #       }'
+
+      # - name: Trigger Dokploy Frontend Deployment
+      #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      #   run: |
+      #     curl -X 'POST' \
+      #     '${{ secrets.DOKPLOY_DOMAIN }}/api/application.deploy' \
+      #     -H 'accept: application/json' \
+      #     -H 'x-api-key: ${{ secrets.DOKPLOY_API_KEY }}' \
+      #     -H 'Content-Type: application/json' \
+      #     -d '{
+      #          "applicationId": "${{ secrets.DOKPLOY_FRONTEND_APP_ID }}"
+      #       }'
