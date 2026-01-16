@@ -1,2 +1,1 @@
-export * from './logo';
-export * from './red-button';
+export * from './components';

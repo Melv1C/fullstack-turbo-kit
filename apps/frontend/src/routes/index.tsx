@@ -1,7 +1,7 @@
 import { useAPIHealth } from '@/hooks/use-api-health';
 import { env } from '@/lib/env';
-import { Button } from '@melv1c/ui-kit';
-import { Logo, RedButton } from '@repo/ui';
+import { CardHealth, Logo } from '@repo/ui';
+import { APP_NAME, APP_VERSION } from '@repo/utils';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/')({
@@ -9,33 +9,23 @@ export const Route = createFileRoute('/')({
 });
 
 function Index() {
-  const { data, isPending, isError } = useAPIHealth();
+  const { isPending, isError, refetch } = useAPIHealth();
 
   return (
-    <div className="p-2">
-      <h3>Welcome Home!</h3>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-gray-100 p-4">
       <Logo />
-
+      <h1 className="text-3xl font-bold">
+        Welcome to {APP_NAME} v{APP_VERSION}
+      </h1>
+      <p className="text-gray-700">Environment: {env.VITE_NODE_ENV}</p>
       <div className="mt-4">
-        <h4>API Health Check:</h4>
-        {isPending && <p>Loading...</p>}
-        {isError && <p className="text-red-500">Error fetching API health.</p>}
-        {data && <p className="text-green-500">API is healthy!</p>}
-      </div>
-
-      <Button onClick={() => alert('Button from UI Kit clicked!')}>Click Me</Button>
-
-      <RedButton />
-
-      <div>
-        <h4 className="mt-4">Environment Variables:</h4>
-        <ul>
-          <li>VITE_NODE_ENV: {env.VITE_NODE_ENV}</li>
-          <li>VITE_PORT: {env.VITE_PORT}</li>
-          <li>VITE_BACKEND_URL: {env.VITE_BACKEND_URL}</li>
-          <li>VITE_FRONTEND_URL: {env.VITE_FRONTEND_URL}</li>
-          <li>VITE_ADMIN_URL: {env.VITE_ADMIN_URL}</li>
-        </ul>
+        <CardHealth
+          className="w-64"
+          isPending={isPending}
+          isError={isError}
+          isFetching={false}
+          refetch={refetch}
+        />
       </div>
     </div>
   );

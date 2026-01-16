@@ -10,6 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@melv1c/ui-kit';
+import { Logo } from '@repo/ui';
 import { APP_NAME } from '@repo/utils';
 import { Link, useRouterState } from '@tanstack/react-router';
 import type { NavItem } from '../type';
@@ -25,7 +26,8 @@ export function AppSidebar({ navItems, ...props }: AppSidebarProps) {
 
   return (
     <Sidebar variant="inset" {...props}>
-      <SidebarHeader>
+      <SidebarHeader className="items-center">
+        <Logo />
         <div className="flex items-center gap-2 px-2 py-1">
           <span className="text-lg font-semibold">{APP_NAME}</span>
         </div>
