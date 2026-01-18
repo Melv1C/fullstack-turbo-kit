@@ -27,6 +27,7 @@ COPY --from=prepare /app/out/full/ .
 
 # Build backend
 ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres"
+RUN npm run generate
 RUN npm run build -- --filter=backend
 
 # ---
