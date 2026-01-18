@@ -30,6 +30,7 @@ COPY apps/admin/.env.docker apps/admin/.env
 
 # Build the admin app
 ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres"
+RUN npm run generate
 RUN npm run build -- --filter=admin
 
 # ---

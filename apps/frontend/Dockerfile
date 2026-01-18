@@ -30,6 +30,7 @@ COPY apps/frontend/.env.docker apps/frontend/.env
 
 # Build the frontend
 ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres"
+RUN npm run generate
 RUN npm run build -- --filter=frontend
 
 # ---
