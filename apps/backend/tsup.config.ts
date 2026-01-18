@@ -8,4 +8,6 @@ export default defineConfig({
   clean: true,
   sourcemap: true,
   tsconfig: 'tsconfig.json',
+  external: ['@prisma/client', '@generated/prisma/client', '.prisma/client'],
+  noExternal: [],
 });
