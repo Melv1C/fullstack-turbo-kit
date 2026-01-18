@@ -1,6 +1,6 @@
+import { logger } from '@/lib/logger';
 import { levelPriority, type LogLevel, type LogStep } from '@repo/utils';
 import type { Context, Next } from 'hono';
-import { Logger } from 'winston';
 
 export type StepLogger = {
   debug: (message: LogStep['message'], metadata?: LogStep['metadata']) => void;
@@ -15,7 +15,7 @@ declare module 'hono' {
   }
 }
 
-export const requestLogger = (logger: Logger) => async (c: Context, next: Next) => {
+export const useLogger = async (c: Context, next: Next) => {
   const start = Date.now();
 
   const steps: LogStep[] = [];

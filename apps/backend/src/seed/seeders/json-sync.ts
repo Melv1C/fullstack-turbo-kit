@@ -52,7 +52,7 @@ async function syncCategories(ctx: SeedContext): Promise<void> {
    * Uncomment the code below after adding the model:
    */
 
-  // import { prisma } from '@repo/database';
+  // import { prisma } from '@/lib/prisma';
   // for (const category of categories) {
   //   await prisma.category.upsert({
   //     where: { slug: category.slug },

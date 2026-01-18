@@ -1,5 +1,5 @@
+import { prisma, type Prisma } from '@/lib/prisma';
 import { isAdmin } from '@/middlewares/use-auth';
-import { prisma, type Prisma } from '@repo/database';
 import { LogFilter$, LogWithUser$, PaginatedLogs$ } from '@repo/utils';
 import { Hono } from 'hono';
 

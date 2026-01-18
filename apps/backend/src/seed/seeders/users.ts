@@ -1,4 +1,4 @@
-import { prisma } from '@repo/database';
+import { prisma } from '@/lib/prisma';
 import { UserRole$ } from '@repo/utils';
 import { auth } from '../../lib/auth';
 import type { SeedContext } from '../types';

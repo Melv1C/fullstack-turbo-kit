@@ -1,5 +1,5 @@
 import { env } from '@/lib/env';
-import { prisma } from '@repo/database';
+import { prisma } from '@/lib/prisma';
 import { seedUsers } from './seeders/users';
 import type { SeedContext } from './types';
 

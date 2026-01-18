@@ -1,9 +1,6 @@
+import { Prisma, PrismaClient } from '@generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient, type Prisma } from '@repo/database/generated/prisma/client';
-import dotenv from 'dotenv';
-
-// Ensure DATABASE_URL is available regardless of import order
-dotenv.config({ path: '../../packages/database/.env' });
+import 'dotenv/config';
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;

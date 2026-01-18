@@ -1,8 +1,8 @@
 import { auth } from '@/lib/auth';
 import { logger } from '@/lib/logger';
+import { prisma } from '@/lib/prisma';
 import { useAuth } from '@/middlewares/use-auth';
-import { prisma } from '@repo/database';
-import { requestLogger } from '@repo/logger';
+import { useLogger } from '@/middlewares/use-logger';
 import { Hono } from 'hono';
 import { healthRoutes } from './health';
 import { logsRoutes } from './logs';
@@ -21,7 +21,7 @@ export const routes = new Hono()
   //////////////////////////////////////////////////
   // Add routes without logging middleware here
   //////////////////////////////////////////////////
-  .use('*', requestLogger(logger))
+  .use('*', useLogger)
   //////////////////////////////////////////////////
   // Add routes with logging middleware applied here
 
