@@ -1,4 +1,3 @@
-// tsup.config.ts
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
@@ -8,6 +7,19 @@ export default defineConfig({
   clean: true,
   sourcemap: true,
   tsconfig: 'tsconfig.json',
-  external: ['@prisma/client', '@generated/prisma/client', '.prisma/client'],
-  noExternal: [],
+  external: ['pg'],
+  esbuildPlugins: [
+    {
+      name: 'rewrite-generated-prisma-imports',
+      setup(build) {
+        build.onResolve({ filter: /^@generated\/prisma(\/.*)?$/ }, args => {
+          const subpath = args.path.replace('@generated/prisma', '');
+          return {
+            path: `../generated/prisma${subpath}.js`,
+            external: true,
+          };
+        });
+      },
+    },
+  ],
 });
