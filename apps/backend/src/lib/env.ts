@@ -1,10 +1,6 @@
 import { NodeEnv$ } from '@repo/utils';
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import { z } from 'zod';
-
-// Load env from database package first, then local app .env
-dotenv.config({ path: '../../packages/database/.env' });
-dotenv.config({ path: '.env' });
 
 const envSchema = z.object({
   NODE_ENV: NodeEnv$,
