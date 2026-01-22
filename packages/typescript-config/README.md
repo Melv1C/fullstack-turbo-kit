@@ -6,7 +6,6 @@ Shared TypeScript configurations for the monorepo.
 
 - **base.json** — Base TypeScript config for all projects
 - **react-library.json** — Config for React libraries
-- **nextjs.json** — Config for Next.js projects (if needed)
 
 ## Usage
 
