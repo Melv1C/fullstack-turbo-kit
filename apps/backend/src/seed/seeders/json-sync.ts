@@ -1,78 +1,87 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { SeedContext } from '../types';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-interface Category {
-  slug: string;
-  name: string;
-  description: string;
-}
+type PrismaDelegate = {
+  findFirst(args: { where: Record<string, unknown> }): Promise<unknown>;
+  update(args: { where: Record<string, unknown>; data: Record<string, unknown> }): Promise<unknown>;
+  create(args: { data: Record<string, unknown> }): Promise<unknown>;
+};
 
-/**
- * Example of syncing data from a JSON file to the database.
- * This pattern ensures the database stays in sync with your JSON source of truth.
- *
- * Use cases:
- * - Static reference data (categories, tags, permissions, etc.)
- * - Configuration that needs to be version-controlled
- * - Data that should be identical across all environments
- */
-export async function syncJsonData(ctx: SeedContext): Promise<void> {
-  ctx.log('Syncing JSON data...');
+export async function syncJsonData(
+  filename: string,
+  prismaInstance: PrismaDelegate,
+  uniqueFields: string[],
+): Promise<void> {
+  const dataPath = join(__dirname, `../data/${filename}.json`);
+  const fileContent = readFileSync(dataPath, 'utf-8');
+  const data = JSON.parse(fileContent) as unknown[];
 
-  await syncCategories(ctx);
-  // Add more sync functions here as needed
-  // await syncPermissions(ctx);
-  // await syncTags(ctx);
-}
-
-async function syncCategories(ctx: SeedContext): Promise<void> {
-  const dataPath = join(__dirname, '../data/categories.json');
-  const categories: Category[] = JSON.parse(readFileSync(dataPath, 'utf-8'));
-
-  ctx.log(`  Syncing ${categories.length} categories...`);
-
-  /**
-   * NOTE: This is an example. You need to create a Category model in your schema first.
-   *
-   * Example schema addition in packages/database/prisma/schema.prisma:
-   *
-   * model Category {
-   *   id          String   @id @default(cuid())
-   *   slug        String   @unique
-   *   name        String
-   *   description String?
-   *   createdAt   DateTime @default(now())
-   *   updatedAt   DateTime @updatedAt
-   * }
-   *
-   * Uncomment the code below after adding the model:
-   */
-
-  // import { prisma } from '@/lib/prisma';
-  // for (const category of categories) {
-  //   await prisma.category.upsert({
-  //     where: { slug: category.slug },
-  //     update: {
-  //       name: category.name,
-  //       description: category.description,
-  //     },
-  //     create: {
-  //       slug: category.slug,
-  //       name: category.name,
-  //       description: category.description,
-  //     },
-  //   });
-  //   ctx.log(`    ✓ Synced category: ${category.name}`);
-  // }
-
-  // For now, just log what would be synced
-  for (const category of categories) {
-    ctx.log(`    → Would sync category: ${category.name} (${category.slug})`);
+  if (!Array.isArray(data)) {
+    throw new Error(
+      `Invalid data format in ${filename}.json: expected array but got ${typeof data}`,
+    );
   }
 
-  ctx.log(`  ✓ Categories sync complete`);
+  const uniqueFieldsStr = uniqueFields.join(', ');
+
+  let successCount = 0;
+  let failureCount = 0;
+
+  console.log(`  Syncing ${filename}...`);
+
+  for (const line of data) {
+    try {
+      if (typeof line !== 'object' || line === null) {
+        throw new Error(`Invalid record format: expected object but got ${typeof line}`);
+      }
+
+      const record = line as Record<string, unknown>;
+
+      // Validate all unique fields exist
+      for (const field of uniqueFields) {
+        if (!(field in record)) {
+          throw new Error(`Missing unique field "${field}" in record: ${JSON.stringify(record)}`);
+        }
+      }
+
+      // Build where clause with all unique fields
+      const where = uniqueFields.reduce(
+        (acc, field) => {
+          acc[field] = record[field];
+          return acc;
+        },
+        {} as Record<string, unknown>,
+      );
+
+      // Try to find existing record
+      const existing = await prismaInstance.findFirst({ where });
+
+      if (existing) {
+        // Update if found
+        await prismaInstance.update({
+          where: { id: (existing as Record<string, unknown>).id },
+          data: record,
+        });
+      } else {
+        // Create if not found
+        await prismaInstance.create({ data: record });
+      }
+      successCount++;
+    } catch (error) {
+      failureCount++;
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error(`    ✗ Failed to sync record: ${errorMessage}`);
+    }
+  }
+
+  console.log(
+    `    ✓ Synced ${filename}: ${successCount} success, ${failureCount} failed (unique: ${uniqueFieldsStr})`,
+  );
+
+  if (failureCount > 0) {
+    throw new Error(`Failed to sync all records in ${filename}: ${failureCount} record(s) failed`);
+  }
 }

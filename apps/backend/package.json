@@ -18,7 +18,6 @@
     "migrate:deploy": "prisma migrate deploy",
     "validate": "prisma validate",
     "seed": "tsx src/seed/index.ts",
-    "seed:verbose": "tsx src/seed/index.ts --verbose",
     "seed:prod": "node dist/seed/index.js",
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit"

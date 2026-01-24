@@ -1,37 +1,51 @@
 import { env } from '@/lib/env';
 import { prisma } from '@/lib/prisma';
-import { seedUsers } from './seeders/users';
-import type { SeedContext } from './types';
+import { seedAdmin } from './seeders/admin';
+import { syncJsonData } from './seeders/json-sync';
 
-function createContext(): SeedContext {
-  return {
-    env: env.NODE_ENV,
-    verbose: process.argv.includes('--verbose') || process.argv.includes('-v'),
-    log: (message: string) => console.log(message),
-  };
-}
-
-export async function seed() {
-  const ctx = createContext();
-
+export async function seed(): Promise<void> {
   console.log('🌱 Starting database seed...');
-  console.log(`   Environment: ${ctx.env}`);
+  console.log(`   Environment: ${env.NODE_ENV}`);
   console.log('');
 
+  const seedResults = {
+    succeeded: [] as string[],
+    failed: [] as Array<{ step: string; error: string }>,
+  };
+
   try {
-    // 1. Sync JSON data (runs in all environments)
-    // This ensures reference data stays in sync with version-controlled JSON files
-    // await syncJsonData(ctx);
+    // 1. Seed admin user
+    try {
+      await seedAdmin();
+      seedResults.succeeded.push('admin');
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      seedResults.failed.push({ step: 'admin', error: errorMessage });
+      throw error; // Re-throw to stop seeding on critical failure
+    }
     console.log('');
 
-    // 2. Seed development-only data
-    // This creates test users only in development
-    await seedUsers(ctx);
+    // 2. Sync JSON data
+    try {
+      await syncJsonData('logs', prisma.log, ['message']);
+      seedResults.succeeded.push('logs');
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      seedResults.failed.push({ step: 'logs', error: errorMessage });
+      throw error; // Re-throw to stop seeding on critical failure
+    }
     console.log('');
 
     console.log('✅ Database seeding complete!');
+    console.log(`   Completed: ${seedResults.succeeded.join(', ')}`);
   } catch (error) {
-    console.error('❌ Seeding failed:', error);
+    console.error('❌ Seeding failed!');
+    if (seedResults.failed.length > 0) {
+      console.error('   Failed steps:');
+      for (const failure of seedResults.failed) {
+        console.error(`     - ${failure.step}: ${failure.error}`);
+      }
+    }
     throw error;
   } finally {
     await prisma.$disconnect();
