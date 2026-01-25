@@ -14,10 +14,6 @@ const envSchema = z.object({
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
 
   BETTER_AUTH_SECRET: z.string().min(32, 'BETTER_AUTH_SECRET must be at least 32 characters'),
-
-  // Seed admin user
-  SEED_ADMIN_EMAIL: z.email().optional(),
-  SEED_ADMIN_PASS: z.string().min(1).optional(),
 });
 
 export const env = envSchema.parse(process.env);

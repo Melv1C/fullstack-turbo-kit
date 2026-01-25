@@ -17,8 +17,8 @@
     "migrate": "prisma migrate dev",
     "migrate:deploy": "prisma migrate deploy",
     "validate": "prisma validate",
-    "seed": "tsx src/seed/index.ts",
-    "seed:prod": "node dist/seed/index.js",
+    "add-admin": "tsx scripts/add-admin.ts",
+    "sync-json-data": "tsx scripts/sync-json-data.ts",
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit"
   },
