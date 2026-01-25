@@ -27,15 +27,15 @@
     "@hono/zod-validator": "^0.7.6",
     "@prisma/adapter-pg": "^7.3.0",
     "@prisma/client": "^7.3.0",
-    "@prisma/studio-core": "^0.9.0",
+    "@prisma/studio-core": "^0.14.0",
     "@repo/utils": "*",
-    "better-auth": "^1.4.13",
+    "better-auth": "^1.4.17",
     "dotenv": "^17.2.3",
-    "hono": "^4.11.4",
+    "hono": "^4.11.5",
     "pg": "^8.17.2",
     "winston": "^3.19.0",
     "winston-transport": "^4.9.0",
-    "zod": "^4.3.5"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

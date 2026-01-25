@@ -1,6 +1,6 @@
 import { AdminLayout } from '@/features/layout';
 import { authClient } from '@/lib/auth-client';
-import { LocaleProvider } from '@melv1c/ui-kit';
+import { UIKitProvider } from '@melv1c/ui-kit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createRootRoute, Outlet, redirect } from '@tanstack/react-router';
@@ -36,7 +36,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <LocaleProvider language="en">{isPublicPage ? <Outlet /> : <AdminLayout />}</LocaleProvider>
+      <UIKitProvider i18nConfig={{ locale: 'en' }}>
+        {isPublicPage ? <Outlet /> : <AdminLayout />}
+      </UIKitProvider>
       <ReactQueryDevtools initialIsOpen={false} />
       <TanStackRouterDevtools />
     </QueryClientProvider>
