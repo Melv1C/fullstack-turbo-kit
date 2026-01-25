@@ -102,9 +102,9 @@ export function CreateUserDialog() {
 
           <div className="space-y-2">
             <Label htmlFor="role">Role</Label>
-            <Select value={role} onValueChange={(value) => setRole(value as UserRole)}>
+            <Select value={role} onValueChange={value => setRole(value as UserRole)}>
               <SelectTrigger>
-                <SelectValue className='capitalize' />
+                <SelectValue className="capitalize" />
               </SelectTrigger>
               <SelectContent>
                 {ROLES.map(r => (
