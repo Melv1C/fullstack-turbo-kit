@@ -9,7 +9,7 @@ import {
   SidebarTrigger,
 } from '@melv1c/ui-kit';
 import { Outlet, useRouterState } from '@tanstack/react-router';
-import { Database, FileText, LayoutDashboard } from 'lucide-react';
+import { Database, FileText, LayoutDashboard, Users } from 'lucide-react';
 import type { NavItem } from '../type';
 import { AppSidebar } from './app-sidebar';
 
@@ -19,6 +19,12 @@ const navItems: NavItem[] = [
     title: 'Dashboard',
     icon: LayoutDashboard,
     description: 'Overview of the admin panel',
+  },
+  {
+    url: '/users',
+    title: 'Users',
+    icon: Users,
+    description: 'Manage application users',
   },
   {
     url: '/logs',

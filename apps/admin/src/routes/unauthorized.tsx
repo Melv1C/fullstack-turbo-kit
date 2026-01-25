@@ -1,4 +1,5 @@
 import { signOut } from '@/lib/auth-client';
+import { env } from '@/lib/env';
 import { Button } from '@melv1c/ui-kit';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 
@@ -36,9 +37,14 @@ function UnauthorizedPage() {
         You don&apos;t have permission to access the admin dashboard. Please contact an
         administrator if you believe this is an error.
       </p>
-      <Button variant="outline" onClick={handleSignOut}>
-        Sign out and try another account
-      </Button>
+      <div className="flex flex-col sm:flex-row gap-2">
+        <Button variant="outline" onClick={handleSignOut}>
+          Sign out and try another account
+        </Button>
+        <Button asChild variant="secondary">
+          <a href={env.VITE_FRONTEND_URL}>Go to Frontend App</a>
+        </Button>
+      </div>
     </div>
   );
 }

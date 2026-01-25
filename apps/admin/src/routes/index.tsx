@@ -1,8 +1,18 @@
 import { useAPIHealth } from '@/hooks/use-api-health';
+import { env } from '@/lib/env';
 import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from '@melv1c/ui-kit';
 import { APP_VERSION } from '@repo/utils';
 import { createFileRoute } from '@tanstack/react-router';
-import { Activity, CheckCircle, Database, RefreshCw, Server, XCircle } from 'lucide-react';
+import {
+  Activity,
+  CheckCircle,
+  Database,
+  ExternalLink,
+  RefreshCw,
+  Server,
+  Users,
+  XCircle,
+} from 'lucide-react';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -74,6 +84,20 @@ function Index() {
         <CardContent>
           <div className="grid gap-4 md:grid-cols-2">
             <a
+              href="/users"
+              className="flex items-center gap-4 rounded-lg border p-4 transition-colors hover:bg-muted/50"
+            >
+              <div className="rounded-lg bg-primary/10 p-2">
+                <Users className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-medium">Manage Users</h3>
+                <p className="text-sm text-muted-foreground">
+                  Create, edit, and manage application users
+                </p>
+              </div>
+            </a>
+            <a
               href="/logs"
               className="flex items-center gap-4 rounded-lg border p-4 transition-colors hover:bg-muted/50"
             >
@@ -95,6 +119,20 @@ function Index() {
               <div>
                 <h3 className="font-medium">Prisma Studio</h3>
                 <p className="text-sm text-muted-foreground">Browse and edit database records</p>
+              </div>
+            </a>
+            <a
+              href={env.VITE_FRONTEND_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 rounded-lg border p-4 transition-colors hover:bg-muted/50"
+            >
+              <div className="rounded-lg bg-primary/10 p-2">
+                <ExternalLink className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-medium">Frontend App</h3>
+                <p className="text-sm text-muted-foreground">Open the main application</p>
               </div>
             </a>
           </div>
