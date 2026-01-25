@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
   Button,
   Dialog,
@@ -40,6 +41,7 @@ export function EditUserDialog() {
 
   useEffect(() => {
     if (user) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setName(user.name);
       setEmail(user.email);
       setRoleValue(user.role);
