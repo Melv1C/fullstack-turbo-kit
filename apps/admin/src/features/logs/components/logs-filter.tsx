@@ -1,4 +1,3 @@
-import { useLogsStore } from '@/features/logs/logs-store';
 import {
   Button,
   Card,
@@ -18,7 +17,8 @@ import {
 } from '@melv1c/ui-kit';
 import type { LogLevel, LogType } from '@repo/utils';
 import { ChevronDown, Search, X } from 'lucide-react';
-import { LOG_LEVELS, LOG_TYPES, PAGE_SIZES } from '../constants';
+import { useLogsStore } from '../logs-store';
+import { LOG_LEVELS, LOG_TYPES, PAGE_SIZES } from '../utils';
 
 interface MultiSelectProps<T extends string> {
   options: T[];

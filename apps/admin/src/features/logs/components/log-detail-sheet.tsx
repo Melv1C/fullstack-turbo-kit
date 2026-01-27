@@ -1,5 +1,3 @@
-import { useLogsStore } from '@/features/logs/logs-store';
-import { useLog } from '@/hooks/use-logs';
 import {
   Avatar,
   AvatarFallback,
@@ -15,7 +13,9 @@ import {
 import type { LogStep, LogWithUser } from '@repo/utils';
 import { AlertCircle, Check, Clock, Copy, Loader2, User } from 'lucide-react';
 import { useState } from 'react';
-import { levelConfig } from '../constants';
+import { useLog } from '../hooks/use-logs';
+import { useLogsStore } from '../logs-store';
+import { levelConfig } from '../utils';
 
 function formatTimestamp(ts: number): string {
   const date = new Date(ts);

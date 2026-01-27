@@ -1,4 +1,4 @@
-import { useAPIHealth } from '@/hooks/use-api-health';
+import { useAPIHealth } from '@/features/api-health';
 import { env } from '@/lib/env';
 import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from '@melv1c/ui-kit';
 import { APP_VERSION } from '@repo/utils';

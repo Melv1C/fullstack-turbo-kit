@@ -1,5 +1,3 @@
-import { useLogsStore } from '@/features/logs/logs-store';
-import { useLogs } from '@/hooks/use-logs';
 import {
   Button,
   Card,
@@ -15,6 +13,8 @@ import {
   TableRow,
 } from '@melv1c/ui-kit';
 import { AlertCircle, ChevronLeft, ChevronRight, Info, Loader2 } from 'lucide-react';
+import { useLogs } from '../hooks/use-logs';
+import { useLogsStore } from '../logs-store';
 import { LogRow } from './log-row';
 
 export function LogsTable() {

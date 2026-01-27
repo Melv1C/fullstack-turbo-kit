@@ -9,7 +9,7 @@ import {
 } from '@melv1c/ui-kit';
 import type { Log } from '@repo/utils';
 import { memo } from 'react';
-import { formatDate, levelConfig, typeColors } from '../constants';
+import { formatDate, levelConfig, typeColors } from '../utils';
 
 interface LogRowProps {
   log: Log;
