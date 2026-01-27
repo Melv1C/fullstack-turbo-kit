@@ -1,114 +1,100 @@
 # AGENTS.md
 
-Agent-focused guidance for the Fullstack Turbo Kit monorepo.
+## Project Overview
 
-## Project overview
+A Turborepo monorepo with a Hono backend API, two React+Vite frontends (user and admin), and shared packages for UI, utils, and API client.
 
-- Turborepo monorepo using npm workspaces.
-- Apps: `backend` (Hono API), `frontend` (Vite + React), `admin` (Vite + React).
-- Packages: `@repo/api-client`, `@repo/ui`, `@repo/utils`, `@repo/eslint-config`, `@repo/typescript-config`.
-- Primary language: TypeScript.
+## Stack
 
-## Workspace names (npm workspaces)
+- **Monorepo**: Turborepo
+- **Backend**: Hono + Node, Prisma (PostgreSQL), better-auth
+- **Frontend/Admin**: React 19, Vite, TanStack Router, TanStack Query
+- **UI**: Tailwind CSS 4, @melv1c/ui-kit
+- **Linting**: ESLint (flat config), Prettier
+- **Type system**: TypeScript (strict mode)
+- **Database**: PostgreSQL (via Docker)
 
-Use these names with `npm --workspace <name> run <script>`:
+## Repository Structure
 
-- Apps: `backend`, `frontend`, `admin`
-- Packages: `@repo/api-client`, `@repo/ui`, `@repo/utils`, `@repo/eslint-config`, `@repo/typescript-config`
-
-## Setup
-
-```bash
-npm install
+```
+apps/
+  backend/                  # Hono API server
+    generated/prisma/       # Prisma client (custom output path)
+    prisma/
+      schema.prisma
+      migrations/
+    scripts/
+      add-admin.ts          # Create admin users
+      sync-json-data.ts     # Sync JSON data to DB
+    src/
+      index.ts
+      lib/                  # Auth, env, logger, Prisma setup
+      middlewares/          # Auth and logger middleware
+      routes/               # API routes
+  frontend/                 # User-facing Vite + React app (port 5173)
+  src/
+      features/             # Feature-based organization
+      lib/                  # API client, auth client, env
+      routes/               # TanStack Router routes
+      routeTree.gen.ts      # Auto-generated route tree
+  admin/                    # Admin Vite + React app (port 5174)
+    src/
+      features/             # Feature-based organization
+      lib/                  # API client, auth client, env
+      routes/               # TanStack Router routes
+      routeTree.gen.ts      # Auto-generated route tree
+packages/
+  api-client/               # Shared API client (@repo/api-client)
+  ui/                       # Shared UI components (@repo/ui)
+  utils/                    # Shared utilities and schemas (@repo/utils)
+  eslint-config/            # ESLint configurations
+  typescript-config/        # TypeScript configurations
 ```
 
-### Install a package in a workspace
+### Features-Based Organization
 
-Use the workspace-aware `npm` command from the repo root to add a dependency to a specific app or package. Examples (adds `axios` to the `frontend` workspace):
+React apps use a features-based folder structure, grouping related components, hooks, and utilities by feature.
 
-```bash
-npm --workspace frontend install axios
-# for a dev dependency
-npm --workspace frontend install --save-dev axios
+```
+src/
+  features/
+    feature/
+      components/       # React components
+      hooks/            # React hooks
+      utils/            # Utility functions and helpers
+      feature-store.ts  # Zustand store for the feature (if needed)
+      index.ts          # Exports components, hooks, utils for outer use
 ```
 
-This runs the install from the monorepo root and updates only the targeted workspace's `package.json`.
+## Dev Environment
 
-### Database (Postgres)
+1. Use Node version specified in `.nvmrc`
+2. Install dependencies: `npm install`
+3. Start PostgreSQL: `docker compose -f docker-compose.db.yml up -d`
+4. Set up environment files by copying `.env.example` files in `apps/backend`, `apps/frontend`, and `apps/admin`
+5. Generate Prisma client: `npm run generate`
+6. Run migrations: `npm run migrate`
+7. Start all apps: `npm run dev`
 
-For local development, bring up Postgres with Docker:
+Backend runs on port 3000, frontend on 5173, admin on 5174.
 
-```bash
-docker compose -f docker-compose.db.yml up -d
-```
+## Code Conventions
 
-### Environment variables
+- ESLint with TypeScript rules (`npm run lint`)
+- Prettier for formatting (`npm run format`)
+- TypeScript strict mode across all packages
 
-Each app has its own `.env.example` file. It contains example env vars needed to run that app.
+## Build & CI
 
-## Dev workflow
+- Build: `npm run build` (builds all apps and packages in dependency order)
+- CI runs: lint, format check, type check, Prisma validation, build
+- CI requires `DATABASE_URL` environment variable
+- GitHub Actions on PRs and pushes to `main`
 
-Run all apps:
+## Monorepo Structure
 
-```bash
-npm run dev
-```
-
-Run a single app (example):
-
-```bash
-npm --workspace backend run dev
-npm --workspace frontend run dev
-npm --workspace admin run dev
-```
-
-Default dev ports:
-
-- Backend: http://localhost:3000
-- Frontend: http://localhost:5173
-- Admin: http://localhost:5174
-
-## Build, lint, and typecheck
-
-From repo root:
-
-```bash
-npm run build
-npm run lint
-npm run check-types
-npm run format
-npm run format:check
-```
-
-Per package:
-
-```bash
-npm --workspace <name> run lint
-npm --workspace <name> run check-types
-```
-
-## Prisma (backend)
-
-Prisma lives in apps/backend/prisma.
-From repo root (Turbo will run in the backend package):
-
-```bash
-npm run generate
-npm run migrate
-npm run migrate:deploy
-npm run validate
-```
-
-## Backend utilities
-
-```bash
-npm --workspace backend run add-admin "<name>" <email> <password> // Add an admin user
-npm --workspace backend run sync-json-data // Sync data from JSON files to the database
-```
-
-## Coding conventions
-
-- Use TypeScript across apps and packages.
-- ESLint config is shared in `@repo/eslint-config`.
-- Prettier formatting is enforced via `npm run format` and `npm run format:check`.
-- Prefer workspace-aware commands (Turbo or `npm --workspace`) so dependency graph is respected.
+- Turborepo manages task orchestration
+- Workspace packages use `*` for local dependencies
+- Backend Prisma output goes to `generated/prisma` (not default location)
+- Shared packages: `@repo/api-client`, `@repo/utils`, `@repo/ui`, config packages
+- All apps and packages are TypeScript modules (`"type": "module"`)
