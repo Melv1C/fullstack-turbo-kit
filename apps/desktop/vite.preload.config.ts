@@ -5,7 +5,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: 'src/preload.ts',
-      formats: ['es'],
+      formats: ['cjs'],
     },
   },
 });
