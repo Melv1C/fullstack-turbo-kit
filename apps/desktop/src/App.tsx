@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
 
+import { Button, Card, CardContent, CardHeader, CardTitle, UIKitProvider } from '@melv1c/ui-kit';
 import { useAppVersion, useOpenExternal, usePing, usePlatform, useShowMessageBox } from './hooks';
 import './index.css';
 
@@ -40,57 +41,37 @@ function AppContent() {
   };
 
   return (
-    <div className="p-8 text-center">
-      <h1 className="text-2xl font-bold">Desktop App</h1>
-
-      {/* Platform Info */}
-      <div className="my-4 text-sm text-gray-600">
-        <p>Version: {appVersion ?? 'Loading...'}</p>
-        <p>
-          Platform: {platform?.platform ?? '...'} ({platform?.arch ?? '...'})
-        </p>
-        <p>Ping: {isPinging ? 'Pinging...' : pingResponse}</p>
+    <UIKitProvider>
+      <div className="flex flex-col items-center justify-center w-full h-full gap-6 p-6">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle>Electron Desktop App</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-2">App Version: {appVersion}</p>
+            <p className="mb-2">
+              Platform: {platform?.platform} ({platform?.arch}) - Node.js v{platform?.nodeVersion}
+            </p>
+            <p className="mb-4">Ping Response: {isPinging ? 'Loading...' : pingResponse}</p>
+          </CardContent>
+        </Card>
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle>Counter: {count}</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-2">
+            <div className="flex gap-2">
+              <Button onClick={() => setCount(count + 1)}>Increment</Button>
+              <Button onClick={() => setCount(count - 1)}>Decrement</Button>
+            </div>
+            <div className="flex gap-2">
+              <Button onClick={handleOpenDocs}>Open Electron Docs</Button>
+              <Button onClick={handleShowMessage}>Show Message Box</Button>
+            </div>
+          </CardContent>
+        </Card>
       </div>
-
-      {/* Counter */}
-      <div className="text-5xl my-8">{count}</div>
-      <div className="flex gap-4 justify-center mb-6">
-        <button
-          onClick={() => setCount(count - 1)}
-          className="px-4 py-2 text-base bg-red-500 text-white rounded hover:bg-red-600"
-        >
-          Decrement
-        </button>
-        <button
-          onClick={() => setCount(0)}
-          className="px-4 py-2 text-base bg-gray-500 text-white rounded hover:bg-gray-600"
-        >
-          Reset
-        </button>
-        <button
-          onClick={() => setCount(count + 1)}
-          className="px-4 py-2 text-base bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Increment
-        </button>
-      </div>
-
-      {/* Bridge Demo */}
-      <div className="flex gap-4 justify-center">
-        <button
-          onClick={handleOpenDocs}
-          className="px-4 py-2 text-base bg-purple-500 text-white rounded hover:bg-purple-600"
-        >
-          Open Electron Docs
-        </button>
-        <button
-          onClick={handleShowMessage}
-          className="px-4 py-2 text-base bg-green-500 text-white rounded hover:bg-green-600"
-        >
-          Show Native Dialog
-        </button>
-      </div>
-    </div>
+    </UIKitProvider>
   );
 }
 
