@@ -21,6 +21,7 @@ export const bridgeConfig = {
 
   // File system features
   ...filesFeatures,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } satisfies Record<BridgeChannel, (...args: any[]) => Promise<any>>;
 
 export type BridgeChannels = keyof typeof bridgeConfig;
