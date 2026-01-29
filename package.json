@@ -17,6 +17,7 @@
     "release:major": "npm version major && git push --follow-tags origin main"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.8",
     "prettier": "^3.8.1",
     "turbo": "^2.8.0",
     "typescript": "5.9.3"
