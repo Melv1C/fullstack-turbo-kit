@@ -1,0 +1,168 @@
+name: Production Deployment
+
+on:
+  push:
+    tags:
+      - 'admin@*'
+      - 'backend@*'
+      - 'frontend@*'
+      - 'desktop@*'
+
+jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+
+  detect-app:
+    name: Detect App from Tag
+    runs-on: ubuntu-latest
+    outputs:
+      app: ${{ steps.parse.outputs.app }}
+      version: ${{ steps.parse.outputs.version }}
+    steps:
+      - name: Parse tag
+        id: parse
+        run: |
+          TAG="${{ github.ref_name }}"
+          APP=$(echo "$TAG" | cut -d'@' -f1)
+          VERSION=$(echo "$TAG" | cut -d'@' -f2)
+          echo "app=$APP" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected app: $APP, version: $VERSION"
+
+  docker:
+    name: Build & Push Production Image
+    needs: [ci, detect-app]
+    if: needs.detect-app.outputs.app != 'desktop'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push production image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./apps/${{ needs.detect-app.outputs.app }}/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/fullstack-turbo-kit-${{ needs.detect-app.outputs.app }}:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/fullstack-turbo-kit-${{ needs.detect-app.outputs.app }}:${{ needs.detect-app.outputs.version }}
+          platforms: linux/amd64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    name: Deploy to Production
+    needs: [docker, detect-app]
+    if: needs.detect-app.outputs.app != 'desktop'
+    runs-on: ubuntu-latest
+    env:
+      APP: ${{ needs.detect-app.outputs.app }}
+
+    steps:
+      - name: Trigger Dokploy Production Deployment
+        run: |
+          case "$APP" in
+            admin)
+              APP_ID="${{ secrets.DOKPLOY_PROD_ADMIN_APP_ID }}"
+              ;;
+            backend)
+              APP_ID="${{ secrets.DOKPLOY_PROD_BACKEND_APP_ID }}"
+              ;;
+            frontend)
+              APP_ID="${{ secrets.DOKPLOY_PROD_FRONTEND_APP_ID }}"
+              ;;
+          esac
+
+          curl -X 'POST' \
+          '${{ secrets.DOKPLOY_DOMAIN }}/api/application.deploy' \
+          -H 'accept: application/json' \
+          -H 'x-api-key: ${{ secrets.DOKPLOY_API_KEY }}' \
+          -H 'Content-Type: application/json' \
+          -d "{
+               \"applicationId\": \"$APP_ID\"
+            }"
+
+  desktop-build:
+    name: Build Desktop App
+    needs: [ci, detect-app]
+    if: needs.detect-app.outputs.app == 'desktop'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            platform: linux
+          - os: windows-latest
+            platform: win32
+          - os: macos-latest
+            platform: darwin
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npm run generate
+
+      - name: Build packages
+        run: npm run build
+
+      - name: Build Desktop App
+        run: npm run make -w apps/desktop
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-${{ matrix.platform }}-${{ needs.detect-app.outputs.version }}
+          path: apps/desktop/out/make/**/*
+          retention-days: 30
+
+  desktop-release:
+    name: Create Desktop Release
+    needs: [desktop-build, detect-app]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          pattern: desktop-*
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Desktop ${{ needs.detect-app.outputs.version }}
+          tag_name: ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          files: artifacts/**/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
