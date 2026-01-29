@@ -5,13 +5,13 @@ import { defineConfig, loadEnv } from 'vite';
 
 export default defineConfig(({ mode }) => {
   const rawEnv = loadEnv(mode, process.cwd(), '');
-  console.log('Loaded ENV:', rawEnv);
 
   return {
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
+        '@repo/ui': path.resolve(__dirname, '../../packages/ui/src'),
       },
     },
     server: {
