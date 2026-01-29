@@ -4,17 +4,10 @@ import { Activity, CheckCircle, RefreshCw, Server, XCircle } from 'lucide-react'
 type CardHealthProps = React.ComponentProps<typeof Card> & {
   isPending: boolean;
   isError: boolean;
-  isFetching: boolean;
   refetch: () => void;
 };
 
-export const CardHealth = ({
-  isPending,
-  isError,
-  isFetching,
-  refetch,
-  ...props
-}: CardHealthProps) => {
+export const CardHealth = ({ isPending, isError, refetch, ...props }: CardHealthProps) => {
   return (
     <Card {...props}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -24,19 +17,19 @@ export const CardHealth = ({
       <CardContent>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {(isPending || isFetching) && (
+            {isPending && (
               <>
                 <Activity className="h-4 w-4 animate-pulse" />
                 <span className="text-sm text-muted-foreground">Checking...</span>
               </>
             )}
-            {!isFetching && isError && (
+            {isError && (
               <>
                 <XCircle className="h-4 w-4 text-destructive" />
                 <span className="text-sm text-destructive">Offline</span>
               </>
             )}
-            {!isFetching && (
+            {!isPending && !isError && (
               <>
                 <CheckCircle className="h-4 w-4 text-green-500" />
                 <span className="text-sm text-green-500">Online</span>
@@ -47,10 +40,10 @@ export const CardHealth = ({
             variant="ghost"
             size="icon"
             onClick={() => refetch()}
-            disabled={isFetching}
+            disabled={isPending}
             title="Retry connection"
           >
-            <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`h-4 w-4 ${isPending ? 'animate-spin' : ''}`} />
           </Button>
         </div>
       </CardContent>

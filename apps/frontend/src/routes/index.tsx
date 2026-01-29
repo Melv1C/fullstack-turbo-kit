@@ -19,13 +19,7 @@ function Index() {
       </h1>
       <p className="text-gray-700">Environment: {env.VITE_NODE_ENV}</p>
       <div className="mt-4">
-        <CardHealth
-          className="w-64"
-          isPending={isPending}
-          isError={isError}
-          isFetching={false}
-          refetch={refetch}
-        />
+        <CardHealth className="w-64" isPending={isPending} isError={isError} refetch={refetch} />
       </div>
     </div>
   );

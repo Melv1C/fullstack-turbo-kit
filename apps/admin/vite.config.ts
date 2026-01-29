@@ -17,9 +17,6 @@ export default defineConfig(({ mode }) => {
     server: {
       port: rawEnv.VITE_PORT ? Number(rawEnv.VITE_PORT) : undefined,
       strictPort: true,
-      proxy: {
-        '/api': rawEnv.VITE_BACKEND_URL!,
-      },
     },
   };
 });

@@ -39,3 +39,6 @@ npm-debug.log*
 
 # Generated files
 generated/
+
+# Vite
+.vite/

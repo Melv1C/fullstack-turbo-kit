@@ -8,7 +8,7 @@ import { cors } from 'hono/cors';
 const app = new Hono()
   .use(
     cors({
-      origin: [env.FRONTEND_URL, env.ADMIN_URL],
+      origin: [env.FRONTEND_URL, env.ADMIN_URL, env.DESKTOP_URL],
       credentials: true,
     }),
   )
