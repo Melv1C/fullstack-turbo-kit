@@ -1,11 +1,11 @@
 {
   "name": "desktop",
+  "version": "0.0.0",
   "type": "module",
   "author": {
     "name": "Jhon Doe"
   },
   "description": "Desktop application for Fullstack Turbo Kit",
-  "version": "0.0.0",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
