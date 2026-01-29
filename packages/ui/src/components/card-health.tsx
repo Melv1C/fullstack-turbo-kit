@@ -29,7 +29,7 @@ export const CardHealth = ({ isPending, isError, refetch, ...props }: CardHealth
                 <span className="text-sm text-destructive">Offline</span>
               </>
             )}
-            {!(isPending || isError) && (
+            {!isPending && !isError && (
               <>
                 <CheckCircle className="h-4 w-4 text-green-500" />
                 <span className="text-sm text-green-500">Online</span>
