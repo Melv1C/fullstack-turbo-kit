@@ -14,6 +14,14 @@ export const bridgeChannels = [
   'openExternal',
   'showMessageBox',
   'getPlatform',
+  // File CRUD operations
+  'readFile',
+  'writeFile',
+  'deleteFile',
+  'listFiles',
+  'fileExists',
+  'selectFile',
+  'selectSaveFile',
 ] as const;
 
 export type BridgeChannel = (typeof bridgeChannels)[number];

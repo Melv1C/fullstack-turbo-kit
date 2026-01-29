@@ -4,3 +4,11 @@ export * from './use-open-external';
 export * from './use-ping';
 export * from './use-platform';
 export * from './use-show-message-box';
+// File CRUD hooks
+export * from './use-delete-file';
+export * from './use-file-exists';
+export * from './use-list-files';
+export * from './use-read-file';
+export * from './use-select-file';
+export * from './use-select-save-file';
+export * from './use-write-file';
