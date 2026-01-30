@@ -134,10 +134,10 @@ jobs:
         run: pnpm run generate
 
       - name: Build packages
-        run: pnpm run build
+        run: pnpm run build --filter=desktop
 
       - name: Build Desktop App
-        run: pnpm run make -w apps/desktop
+        run: pnpm --filter desktop run make
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
