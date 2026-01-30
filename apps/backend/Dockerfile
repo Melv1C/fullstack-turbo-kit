@@ -51,5 +51,6 @@ COPY --from=builder --chown=nodejs:nodejs /app/apps/backend/generated ./apps/bac
 COPY --from=builder --chown=nodejs:nodejs /app/apps/backend/package.json ./apps/backend/package.json
 COPY --from=builder --chown=nodejs:nodejs /app/packages ./packages
 COPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules
+COPY --from=builder --chown=nodejs:nodejs /app/apps/backend/node_modules ./apps/backend/node_modules
 
 CMD ["pnpm", "--filter", "backend", "start"]
