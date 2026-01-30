@@ -13,11 +13,11 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "backend": "*",
+    "backend": "workspace:*",
     "hono": "^4.11.7"
   },
   "devDependencies": {
-    "@repo/typescript-config": "*",
+    "@repo/typescript-config": "workspace:*",
     "typescript": "^5.9.3"
   }
 }
