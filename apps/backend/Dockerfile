@@ -31,7 +31,7 @@ COPY --from=prepare /app/out/full/ .
 # Build backend
 ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres"
 RUN pnpm run generate
-RUN pnpm run build -- --filter=backend
+RUN pnpm build --filter=backend
 
 # ---
 FROM base AS runner
@@ -52,4 +52,4 @@ COPY --from=builder --chown=nodejs:nodejs /app/apps/backend/package.json ./apps/
 COPY --from=builder --chown=nodejs:nodejs /app/packages ./packages
 COPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules
 
-CMD ["pnpm", "start", "--prefix", "apps/backend"]
+CMD ["pnpm", "--filter", "backend", "start"]

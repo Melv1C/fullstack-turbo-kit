@@ -34,7 +34,7 @@ COPY apps/admin/.env.docker apps/admin/.env
 # Build the admin app
 ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres"
 RUN pnpm run generate
-RUN pnpm run build -- --filter=admin
+RUN pnpm build --filter=admin
 
 # ---
 FROM nginx:alpine AS runner

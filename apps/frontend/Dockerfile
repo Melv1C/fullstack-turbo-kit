@@ -34,7 +34,7 @@ COPY apps/frontend/.env.docker apps/frontend/.env
 # Build the frontend
 ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres"
 RUN pnpm run generate
-RUN pnpm run build -- --filter=frontend
+RUN pnpm build --filter=frontend
 
 # ---
 FROM nginx:alpine AS runner
