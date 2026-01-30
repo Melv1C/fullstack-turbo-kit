@@ -25,7 +25,7 @@ All packages and apps are written in [TypeScript](https://www.typescriptlang.org
 Install dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Development
@@ -33,39 +33,7 @@ npm install
 Run all apps in development mode:
 
 ```bash
-npm run dev
-```
-
-## CI/CD
-
-This project includes GitHub Actions workflows for:
-
-- **Pipeline** — Installation, linting, type checking, and testing + staging deployment on push to `main` branch
-- **Release** — Automated versioning and release process
-
-## Release Process
-
-Create a new release using semantic versioning:
-
-```bash
-npm run release:patch  # 1.0.0 → 1.0.1
-npm run release:minor  # 1.0.0 → 1.1.0
-npm run release:major  # 1.0.0 → 2.0.0
-```
-
-## Project Structure
-
-```
-apps/
-  ├── admin/            # Vite + React admin app
-  ├── backend/          # Hono API server
-  └── frontend/         # Vite + React app
-packages/
-  ├── api-client/       # Shared API client for frontend-backend communication
-  ├── ui/               # Shared UI components
-  ├── utils/            # Shared utilities
-  ├── eslint-config/    # ESLint configurations
-  └── typescript-config/ # TypeScript configurations
+pnpm run dev
 ```
 
 ## Learn More

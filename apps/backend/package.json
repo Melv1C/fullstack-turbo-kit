@@ -29,7 +29,7 @@
     "@prisma/adapter-pg": "^7.3.0",
     "@prisma/client": "^7.3.0",
     "@prisma/studio-core": "^0.14.0",
-    "@repo/utils": "*",
+    "@repo/utils": "workspace:*",
     "better-auth": "^1.4.18",
     "dotenv": "^17.2.3",
     "hono": "^4.11.7",
@@ -39,10 +39,11 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "@types/node": "^25.1.0",
     "@types/pg": "^8.16.0",
+    "eslint": "^9.39.2",
     "prisma": "^7.3.0",
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",

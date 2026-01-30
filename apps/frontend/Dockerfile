@@ -1,10 +1,13 @@
 FROM node:22-alpine AS base
 RUN apk update && apk add --no-cache libc6-compat
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 WORKDIR /app
 
 # ---
 FROM base AS prepare
-RUN npm install -g turbo@^2
+RUN pnpm install -g turbo@^2
 COPY . .
 # Prune the monorepo for the frontend app
 RUN turbo prune frontend --docker
@@ -16,7 +19,7 @@ COPY --from=prepare /app/out/json/ .
 # Remove package-lock.json to avoid conflicts
 RUN rm -f package-lock.json
 # Install dependencies
-RUN npm i
+RUN pnpm i
 
 # ---
 FROM base AS builder
@@ -30,8 +33,8 @@ COPY apps/frontend/.env.docker apps/frontend/.env
 
 # Build the frontend
 ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres"
-RUN npm run generate
-RUN npm run build -- --filter=frontend
+RUN pnpm run generate
+RUN pnpm build --filter=frontend
 
 # ---
 FROM nginx:alpine AS runner

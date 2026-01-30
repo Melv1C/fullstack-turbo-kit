@@ -6,6 +6,7 @@ A Turborepo monorepo with a Hono backend API, two React+Vite frontends (user and
 
 ## Stack
 
+- **Packager**: pnpm
 - **Monorepo**: Turborepo
 - **Backend**: Hono + Node, Prisma (PostgreSQL), better-auth
 - **Frontend/Admin**: React 19, Vite, TanStack Router, TanStack Query
@@ -69,24 +70,24 @@ src/
 ## Dev Environment
 
 1. Use Node version specified in `.nvmrc`
-2. Install dependencies: `npm install`
+2. Install dependencies: `pnpm install`
 3. Start PostgreSQL: `docker compose -f docker-compose.db.yml up -d`
 4. Set up environment files by copying `.env.example` files in `apps/backend`, `apps/frontend`, and `apps/admin`
-5. Generate Prisma client: `npm run generate`
-6. Run migrations: `npm run migrate`
-7. Start all apps: `npm run dev`
+5. Generate Prisma client: `pnpm run generate`
+6. Run migrations: `pnpm run migrate`
+7. Start all apps: `pnpm run dev`
 
 Backend runs on port 3000, frontend on 5173, admin on 5174.
 
 ## Code Conventions
 
-- ESLint with TypeScript rules (`npm run lint`)
-- Prettier for formatting (`npm run format`)
+- ESLint with TypeScript rules (`pnpm run lint`)
+- Prettier for formatting (`pnpm run format`)
 - TypeScript strict mode across all packages
 
 ## Build & CI
 
-- Build: `npm run build` (builds all apps and packages in dependency order)
+- Build: `pnpm run build` (builds all apps and packages in dependency order)
 - CI runs: lint, format check, type check, Prisma validation, build
 - CI requires `DATABASE_URL` environment variable
 - GitHub Actions on PRs and pushes to `main`

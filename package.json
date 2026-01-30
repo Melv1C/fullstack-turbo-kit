@@ -21,13 +21,9 @@
     "turbo": "^2.8.0",
     "typescript": "5.9.3"
   },
-  "packageManager": "npm@11.8.0",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "optionalDependencies": {
     "@esbuild/darwin-arm64": "^0.27.2",
     "@rollup/rollup-linux-x64-gnu": "4.57.1"
-  }
+  },
+  "packageManager": "pnpm@10.28.2"
 }
