@@ -26,8 +26,4 @@ done
 echo "📦 Updating root package.json..."
 (cd "$ROOT_DIR" && ncu -u)
 
-# Install all dependencies
-echo "📥 Installing dependencies..."
-(cd "$ROOT_DIR" && npm i)
-
 echo "✅ All dependencies updated!"
