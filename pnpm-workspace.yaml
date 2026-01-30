@@ -2,9 +2,12 @@ packages:
   - apps/*
   - packages/*
 
+nodeLinker: hoisted
+
 onlyBuiltDependencies:
   - '@prisma/engines'
   - electron
   - electron-winstaller
   - esbuild
   - prisma
+  - unrs-resolver
