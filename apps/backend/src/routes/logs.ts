@@ -1,12 +1,12 @@
 import { prisma, type Prisma } from '@/lib/prisma';
 import { isAdmin } from '@/middlewares/use-auth';
+import { zValidator } from '@hono/zod-validator';
 import { LogFilter$, LogWithUser$, PaginatedLogs$ } from '@repo/utils';
 import { Hono } from 'hono';
 
 export const logsRoutes = new Hono()
-  .get('/', isAdmin, async c => {
-    const query = c.req.query();
-    const filter = LogFilter$.parse(query);
+  .get('/', isAdmin, zValidator('query', LogFilter$), async c => {
+    const filter = c.req.valid('query');
 
     const where: Prisma.LogWhereInput = {};
 
