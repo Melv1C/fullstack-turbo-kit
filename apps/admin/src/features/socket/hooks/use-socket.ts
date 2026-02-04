@@ -1,6 +1,11 @@
-import { connectSocket, disconnectSocket, getSocket, type TypedSocket } from '@/lib/socket-client';
 import type { ServerToClientEvents } from '@repo/utils';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  connectSocket,
+  disconnectSocket,
+  getSocket,
+  type TypedSocket,
+} from '../../../lib/socket-client';
 
 interface UseSocketOptions {
   /** Whether to auto-connect on mount (default: true) */

@@ -1,5 +1,5 @@
 import { LogDetailSheet, LogsFilter, LogsTable } from '@/features/logs';
-import { useSocket } from '@/hooks/use-socket';
+import { useSocket } from '@/features/socket';
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect } from 'react';
 

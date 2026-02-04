@@ -1,4 +1,4 @@
-import { useSocket } from '@/hooks/use-socket';
+import { useSocket } from '@/features/socket';
 import { apiClient } from '@/lib/api-client';
 import {
   Log$,
