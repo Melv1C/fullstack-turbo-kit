@@ -1,9 +1,11 @@
 import { env } from '@/lib/env';
+import { initializeSocketIO } from '@/lib/socket';
 import { routes } from '@/routes';
 import { serve } from '@hono/node-server';
 import { APP_NAME, APP_VERSION } from '@repo/utils';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
+import type { Server as HTTPServer } from 'node:http';
 
 const app = new Hono()
   .use(
@@ -16,7 +18,7 @@ const app = new Hono()
 
 export type AppType = typeof app;
 
-serve(
+const httpServer = serve(
   {
     fetch: app.fetch,
     port: env.PORT,
@@ -27,3 +29,6 @@ serve(
     console.log(`   App Version: ${APP_VERSION}`);
   },
 );
+
+// Initialize Socket.IO with the HTTP server
+initializeSocketIO(httpServer as HTTPServer);

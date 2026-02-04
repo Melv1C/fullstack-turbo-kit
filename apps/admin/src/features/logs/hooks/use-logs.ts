@@ -1,27 +1,58 @@
+import { useSocket } from '@/hooks/use-socket';
 import { apiClient } from '@/lib/api-client';
-import type { Log, LogFilter, LogWithUser, PaginatedLogs } from '@repo/utils';
-import { useQuery } from '@tanstack/react-query';
-
-function parseLogDates(log: Omit<Log, 'createdAt'> & { createdAt: string }): Log {
-  return {
-    ...log,
-    createdAt: new Date(log.createdAt),
-  };
-}
-
-function parseLogWithUserDates(
-  log: Omit<LogWithUser, 'createdAt'> & { createdAt: string },
-): LogWithUser {
-  return {
-    ...log,
-    createdAt: new Date(log.createdAt),
-  };
-}
+import {
+  Log$,
+  LogWithUser$,
+  type Log,
+  type LogFilter,
+  type LogWithUser,
+  type PaginatedLogs,
+} from '@repo/utils';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 const LOGS_STALE_TIME = 30000; // 30 seconds
 const LOGS_CACHE_TIME = 5 * 60 * 1000; // 5 minutes
 
 export function useLogs(filter: Partial<LogFilter> = {}) {
+  const { socket } = useSocket();
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    const handleLogCreated = (newLog: Log) => {
+      const parsedLog = Log$.parse(newLog);
+
+      // Check if the new log matches the current filter
+      if (filter.types && !filter.types.includes(parsedLog.type)) return;
+      if (filter.levels && !filter.levels.includes(parsedLog.level)) return;
+      if (filter.startDate && parsedLog.createdAt < filter.startDate) return;
+      if (filter.endDate && parsedLog.createdAt > filter.endDate) return;
+      if (filter.search) {
+        const searchLower = filter.search.toLowerCase();
+        if (
+          !parsedLog.message.toLowerCase().includes(searchLower) &&
+          !(parsedLog.path && parsedLog.path.toLowerCase().includes(searchLower))
+        ) {
+          return;
+        }
+      }
+
+      queryClient.setQueryData<PaginatedLogs>(['logs', filter], oldData => {
+        if (!oldData) return oldData;
+        return {
+          ...oldData,
+          data: [parsedLog, ...oldData.data],
+        };
+      });
+    };
+
+    socket.on('log:created', handleLogCreated);
+
+    return () => {
+      socket.off('log:created', handleLogCreated);
+    };
+  }, [socket, filter, queryClient]);
+
   return useQuery({
     queryKey: ['logs', filter],
     queryFn: async (): Promise<PaginatedLogs> => {
@@ -44,7 +75,7 @@ export function useLogs(filter: Partial<LogFilter> = {}) {
 
       const result = await res.json();
       return {
-        data: result.data.map(parseLogDates),
+        data: Log$.array().parse(result.data),
         pagination: result.pagination,
       };
     },
@@ -70,7 +101,7 @@ export function useLog(id: number | null) {
       }
 
       const log = await res.json();
-      return parseLogWithUserDates(log);
+      return LogWithUser$.parse(log);
     },
     enabled: id !== null,
     staleTime: LOGS_STALE_TIME,

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { BetterAuthId$ } from './base';
+import { BetterAuthId$, Date$ } from './base';
 
 export const LogType$ = z.enum(['REQUEST', 'APP']);
 export type LogType = z.infer<typeof LogType$>;
@@ -34,7 +34,7 @@ export const Log$ = z.object({
   durationMs: z.number().nullish(),
   steps: LogStep$.array().nullish(),
 
-  createdAt: z.date(),
+  createdAt: Date$,
 });
 export type Log = z.infer<typeof Log$>;
 

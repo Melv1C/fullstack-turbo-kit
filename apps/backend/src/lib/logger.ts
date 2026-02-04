@@ -1,8 +1,9 @@
-import { type LogCreate, LogCreate$ } from '@repo/utils';
+import { Log$, type LogCreate, LogCreate$ } from '@repo/utils';
 import winston from 'winston';
 import Transport from 'winston-transport';
 import { env } from './env';
 import { prisma } from './prisma';
+import { emitToRoom } from './socket';
 
 class PostgresTransport extends Transport {
   override async log(info: LogCreate, callback: () => void) {
@@ -12,7 +13,7 @@ class PostgresTransport extends Transport {
       LogCreate$.parse(info);
 
     try {
-      await prisma.log.create({
+      const log = await prisma.log.create({
         data: {
           type,
           level,
@@ -26,6 +27,8 @@ class PostgresTransport extends Transport {
           steps: steps ?? undefined,
         },
       });
+      // Emit the new log to all subscribed clients
+      emitToRoom('LOGS', 'log:created', Log$.parse(log));
     } catch (err) {
       // NEVER throw from logger - errors degrade gracefully
       console.error('Failed to persist log', err);
