@@ -30,7 +30,7 @@ COPY --from=prepare /app/out/full/ .
 
 # Build backend
 ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres"
-RUN pnpm run generate
+RUN pnpm run prisma:generate
 RUN pnpm build --filter=backend
 
 # ---

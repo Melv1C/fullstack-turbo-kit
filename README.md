@@ -47,13 +47,13 @@ pnpm run docker:db
 Migrate the database:
 
 ```bash
-pnpm run migrate
+pnpm run prisma:migrate
 ```
 
 Generate the prisma client:
 
 ```bash
-pnpm run generate
+pnpm run prisma:generate
 ```
 
 Run all apps in development mode:
