@@ -41,10 +41,10 @@ jobs:
         run: pnpm run format:check
 
       - name: Prisma Validate
-        run: pnpm run validate
+        run: pnpm run prisma:validate
 
       - name: Prisma Generate
-        run: pnpm run generate
+        run: pnpm run prisma:generate
 
       - name: Type checks
         run: pnpm run check-types

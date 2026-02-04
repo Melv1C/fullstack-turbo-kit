@@ -131,7 +131,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Generate Prisma Client
-        run: pnpm run generate
+        run: pnpm run prisma:generate
 
       - name: Build packages
         run: pnpm run build --filter=desktop

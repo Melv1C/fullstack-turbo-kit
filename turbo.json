@@ -7,7 +7,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "env": ["VITE_*", "NEXT_PUBLIC_*"],
+      "env": ["VITE_*"],
       "inputs": ["$TURBO_DEFAULT$"],
       "outputs": ["dist/**"]
     },
@@ -16,19 +16,6 @@
     },
     "check-types": {
       "dependsOn": ["^build", "^check-types"]
-    },
-    "generate": {
-      "cache": false
-    },
-    "migrate": {
-      "cache": false,
-      "persistent": true
-    },
-    "migrate:deploy": {
-      "cache": false
-    },
-    "validate": {
-      "cache": false
     },
     "dev": {
       "cache": false,
