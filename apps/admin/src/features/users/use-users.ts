@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import type { UsersFilter } from './users-store';
 
-export const USERS_QUERY_KEY = 'users';
+const USERS_QUERY_KEY = 'users';
 const USERS_STALE_TIME = 30_000;
 const USERS_CACHE_TIME = 5 * 60 * 1000;
 

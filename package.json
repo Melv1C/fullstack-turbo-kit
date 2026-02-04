@@ -8,6 +8,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
+    "knip": "pnpm dlx knip",
     "generate": "turbo run generate",
     "migrate": "turbo run migrate",
     "migrate:deploy": "turbo run migrate:deploy",

@@ -33,19 +33,3 @@ export function formatDate(date: Date): string {
     second: '2-digit',
   }).format(date);
 }
-
-export function formatDuration(ms: number): string {
-  if (ms < 1000) {
-    return `${ms}ms`;
-  }
-  return `${(ms / 1000).toFixed(2)}s`;
-}
-
-export function getStatusColor(
-  statusCode: number,
-): 'default' | 'secondary' | 'destructive' | 'outline' {
-  if (statusCode >= 500) return 'destructive';
-  if (statusCode >= 400) return 'destructive';
-  if (statusCode >= 300) return 'outline';
-  return 'secondary';
-}

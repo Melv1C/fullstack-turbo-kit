@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "@melv1c/ui-kit": "^1.5.0",
-    "@repo/utils": "workspace:*",
     "lucide-react": "^0.563.0"
   }
 }

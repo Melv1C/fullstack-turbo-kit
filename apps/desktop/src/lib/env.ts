@@ -10,7 +10,4 @@ const envSchema = z.object({
   VITE_ADMIN_URL: z.url().default('http://localhost:5174'),
 });
 
-console.log('import.meta.env:', import.meta.env);
 export const env = envSchema.parse(import.meta.env);
-
-export type Env = z.infer<typeof envSchema>;

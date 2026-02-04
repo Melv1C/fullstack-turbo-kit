@@ -4,7 +4,7 @@ import Transport from 'winston-transport';
 import { env } from './env';
 import { prisma } from './prisma';
 
-export class PostgresTransport extends Transport {
+class PostgresTransport extends Transport {
   override async log(info: LogCreate, callback: () => void) {
     setImmediate(callback);
 
