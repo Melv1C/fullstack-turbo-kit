@@ -1,0 +1,5 @@
+{
+  "workspaces": true,
+  "format": ["group"],
+  "peer": true
+}
