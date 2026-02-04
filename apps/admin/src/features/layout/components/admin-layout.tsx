@@ -18,25 +18,21 @@ const navItems: NavItem[] = [
     url: '/',
     title: 'Dashboard',
     icon: LayoutDashboard,
-    description: 'Overview of the admin panel',
   },
   {
     url: '/users',
     title: 'Users',
     icon: Users,
-    description: 'Manage application users',
   },
   {
     url: '/logs',
     title: 'Logs',
     icon: FileText,
-    description: 'View application logs',
   },
   {
     url: '/prisma-studio',
     title: 'Prisma Studio',
     icon: Database,
-    description: 'Database management interface',
   },
 ];
 
@@ -68,12 +64,6 @@ export function AdminLayout() {
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <div className="space-y-6 flex flex-col h-full">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight">{currentPage?.title}</h2>
-              {currentPage?.description && (
-                <p className="text-muted-foreground">{currentPage?.description}</p>
-              )}
-            </div>
             <Outlet />
           </div>
         </div>
