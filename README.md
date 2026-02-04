@@ -9,6 +9,7 @@ A production-ready [Turborepo](https://turbo.build/repo) monorepo starter with f
 - **backend** — [Hono](https://hono.dev/) API server
 - **frontend** — [Vite](https://vitejs.dev/) + [React](https://react.dev/) application
 - **admin** — Vite + React admin application
+- **desktop** — [Electron](https://www.electronjs.org/) desktop application
 
 ### Packages
 
@@ -28,17 +29,35 @@ Install dependencies:
 pnpm install
 ```
 
-### Development
+Copy the example environment variables:
+
+```bash
+cp apps/backend/.env.example apps/backend/.env
+cp apps/frontend/.env.example apps/frontend/.env
+cp apps/admin/.env.example apps/admin/.env
+cp apps/desktop/.env.example apps/desktop/.env
+```
+
+Start the development database (PostgreSQL):
+
+```bash
+pnpm run docker:db
+```
+
+Migrate the database:
+
+```bash
+pnpm run migrate
+```
+
+Generate the prisma client:
+
+```bash
+pnpm run generate
+```
 
 Run all apps in development mode:
 
 ```bash
 pnpm run dev
 ```
-
-## Learn More
-
-- [Turborepo Documentation](https://turbo.build/repo/docs)
-- [Hono Documentation](https://hono.dev/)
-- [Vite Documentation](https://vitejs.dev/)
-- [React Documentation](https://react.dev/)
