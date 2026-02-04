@@ -1,4 +1,4 @@
-import { Log$, type LogCreate, LogCreate$ } from '@repo/utils';
+import { getRoomName, Log$, type LogCreate, LogCreate$ } from '@repo/utils';
 import winston from 'winston';
 import Transport from 'winston-transport';
 import { env } from './env';
@@ -28,7 +28,7 @@ class PostgresTransport extends Transport {
         },
       });
       // Emit the new log to all subscribed clients
-      emitToRoom('LOGS', 'log:created', Log$.parse(log));
+      emitToRoom(getRoomName.logs, 'log:created', Log$.parse(log));
     } catch (err) {
       // NEVER throw from logger - errors degrade gracefully
       console.error('Failed to persist log', err);

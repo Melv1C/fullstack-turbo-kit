@@ -1,5 +1,6 @@
 import { LogDetailSheet, LogsFilter, LogsTable } from '@/features/logs';
 import { useSocket } from '@/features/socket';
+import { getRoomName } from '@repo/utils';
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect } from 'react';
 
@@ -8,10 +9,10 @@ function LogsPage() {
   const { socket } = useSocket();
 
   useEffect(() => {
-    socket.emit('logs:subscribe');
+    socket.emit('joinRoom', getRoomName.logs);
 
     return () => {
-      socket.emit('logs:unsubscribe');
+      socket.emit('leaveRoom', getRoomName.logs);
     };
   }, [socket]);
 

@@ -7,7 +7,6 @@ import {
 } from '@repo/utils';
 import type { Server as HTTPServer } from 'node:http';
 import { Server, Socket } from 'socket.io';
-import z from 'zod';
 import { auth } from './auth';
 import { env } from './env';
 import { logger } from './logger';
@@ -51,9 +50,6 @@ const getSocketInfo = (socket: Socket) => ({
   origin: socket.handshake.headers.origin,
 });
 
-export const SocketRooms$ = z.enum(['LOGS']);
-type SocketRooms = z.infer<typeof SocketRooms$>;
-
 // Type-safe Socket.IO server
 export type TypedServer = Server<
   ClientToServerEvents,
@@ -82,7 +78,7 @@ export function initializeSocketIO(httpServer: HTTPServer): TypedServer {
   // Set up connection handlers
   io.on('connection', async socket => {
     await useAuth(socket);
-    logger.info(`Socket connected: ${socket.id}`, {
+    logger.debug(`Socket connected: ${socket.id}`, {
       path: 'socket.io/connection',
       userId: socket.data.user?.id,
       metadata: {
@@ -93,13 +89,43 @@ export function initializeSocketIO(httpServer: HTTPServer): TypedServer {
     // Send welcome message
     socket.emit('connected', { message: 'Connected to server' });
 
-    // Handle log subscription
-    socket.on('logs:subscribe', () => {
-      socket.join(SocketRooms$.enum.LOGS);
+    // Handle join room requests
+    socket.on('joinRoom', (room: string) => {
+      // Verify admin only for admin rooms
+      if (room.startsWith('admin_') && socket.data.user?.role !== 'admin') {
+        logger.warn(`Unauthorized join room attempt: ${room}`, {
+          path: 'socket.io/joinRoom',
+          userId: socket.data.user?.id,
+          metadata: {
+            socket: getSocketInfo(socket),
+            room,
+          },
+        });
+        return;
+      }
+
+      socket.join(room);
+      logger.debug(`Socket joined room: ${room}`, {
+        path: 'socket.io/joinRoom',
+        userId: socket.data.user?.id,
+        metadata: {
+          socket: getSocketInfo(socket),
+          room,
+        },
+      });
     });
 
-    socket.on('logs:unsubscribe', () => {
-      socket.leave(SocketRooms$.enum.LOGS);
+    // Handle leave room requests
+    socket.on('leaveRoom', (room: string) => {
+      socket.leave(room);
+      logger.debug(`Socket left room: ${room}`, {
+        path: 'socket.io/leaveRoom',
+        userId: socket.data.user?.id,
+        metadata: {
+          socket: getSocketInfo(socket),
+          room,
+        },
+      });
     });
 
     socket.on('disconnect', reason => {
@@ -123,7 +149,7 @@ export function initializeSocketIO(httpServer: HTTPServer): TypedServer {
  * Emit an event to all clients in a specific room
  */
 export function emitToRoom<E extends keyof ServerToClientEvents>(
-  room: SocketRooms,
+  room: string,
   event: E,
   ...args: Parameters<ServerToClientEvents[E]>
 ): void {

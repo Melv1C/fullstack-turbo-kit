@@ -8,20 +8,16 @@ import { Log, User } from './schemas';
  * Events emitted from the server to clients
  */
 export interface ServerToClientEvents {
-  // Log events
-  'log:created': (log: Log) => void;
-
-  // Connection events
   connected: (data: { message: string }) => void;
+  'log:created': (log: Log) => void;
 }
 
 /**
  * Events emitted from clients to the server
  */
 export interface ClientToServerEvents {
-  // Subscribe to specific channels
-  'logs:subscribe': () => void;
-  'logs:unsubscribe': () => void;
+  joinRoom: (room: string) => void;
+  leaveRoom: (room: string) => void;
 }
 
 /**
@@ -36,3 +32,7 @@ export interface InterServerEvents {}
 export interface SocketData {
   user: User | null;
 }
+
+export const getRoomName = {
+  logs: 'admin_logs',
+};
