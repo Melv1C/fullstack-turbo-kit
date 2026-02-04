@@ -33,7 +33,7 @@ apps/
       middlewares/          # Auth and logger middleware
       routes/               # API routes
   frontend/                 # User-facing Vite + React app (port 5173)
-  src/
+    src/
       features/             # Feature-based organization
       lib/                  # API client, auth client, env
       routes/               # TanStack Router routes
@@ -44,6 +44,14 @@ apps/
       lib/                  # API client, auth client, env
       routes/               # TanStack Router routes
       routeTree.gen.ts      # Auto-generated route tree
+  desktop/                  # Electron desktop app
+    src/
+      main.ts               # Electron main process
+      preload.ts            # Preload script
+      renderer.tsx          # React entry point
+      bridge/               # Electron-React bridge
+      lib/                  # API client, auth client, env
+      features/             # Feature-based organization
 packages/
   api-client/               # Shared API client (@repo/api-client)
   ui/                       # Shared UI components (@repo/ui)
