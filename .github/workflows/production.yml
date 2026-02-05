@@ -7,6 +7,7 @@ on:
       - 'backend@*'
       - 'frontend@*'
       - 'desktop@*'
+      - 'mobile@*'
 
 jobs:
   detect-app:
@@ -29,7 +30,7 @@ jobs:
   docker:
     name: Build & Push Production Image
     needs: [detect-app]
-    if: needs.detect-app.outputs.app != 'desktop'
+    if: needs.detect-app.outputs.app != 'desktop' && needs.detect-app.outputs.app != 'mobile'
     runs-on: ubuntu-latest
 
     steps:
@@ -67,7 +68,7 @@ jobs:
   deploy:
     name: Deploy to Production
     needs: [docker, detect-app]
-    if: needs.detect-app.outputs.app != 'desktop'
+    if: needs.detect-app.outputs.app != 'desktop' && needs.detect-app.outputs.app != 'mobile'
     runs-on: ubuntu-latest
     env:
       APP: ${{ needs.detect-app.outputs.app }}
@@ -166,6 +167,47 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           name: Desktop ${{ needs.detect-app.outputs.version }}
+          tag_name: ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          files: artifacts/**/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ════════════════════════════════════════════════════════════════════
+  # Mobile – Build (reuses .github/workflows/mobile.yml)
+  # ════════════════════════════════════════════════════════════════════
+  mobile-build:
+    name: Build Mobile
+    needs: [detect-app]
+    if: needs.detect-app.outputs.app == 'mobile'
+    uses: ./.github/workflows/mobile.yml
+    with:
+      version: ${{ needs.detect-app.outputs.version }}
+    secrets: inherit
+
+  # ════════════════════════════════════════════════════════════════════
+  # Mobile – Create Release
+  # ════════════════════════════════════════════════════════════════════
+  mobile-release:
+    name: Create Mobile Release
+    needs: [mobile-build, detect-app]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          pattern: mobile-*
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Mobile ${{ needs.detect-app.outputs.version }}
           tag_name: ${{ github.ref_name }}
           draft: false
           prerelease: false
