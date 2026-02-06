@@ -2,5 +2,5 @@
   "workspaces": true,
   "format": ["group"],
   "peer": true,
-  "reject": ["react", "react-dom"]
+  "reject": ["react", "react-dom", "react-native"]
 }
