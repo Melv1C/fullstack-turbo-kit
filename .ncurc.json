@@ -1,5 +1,6 @@
 {
   "workspaces": true,
   "format": ["group"],
-  "peer": true
+  "peer": true,
+  "reject": ["react", "react-dom"]
 }
