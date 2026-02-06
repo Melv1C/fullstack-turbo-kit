@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-A Turborepo monorepo with a Hono backend API, two React+Vite frontends (user and admin), and shared packages for UI, utils, and API client.
+A Turborepo monorepo with a Hono backend API, two React+Vite frontends (user and admin), and desktop/mobile clients plus shared packages for UI, utils, and API client.
 
 ## Stack
 
@@ -52,6 +52,11 @@ apps/
       bridge/               # Electron-React bridge
       lib/                  # API client, auth client, env
       features/             # Feature-based organization
+  mobile/                   # Expo React Native app
+    src/
+      app/
+      hooks/
+      lib/
 packages/
   api-client/               # Shared API client (@repo/api-client)
   ui/                       # Shared UI components (@repo/ui)
@@ -81,9 +86,10 @@ src/
 2. Install dependencies: `pnpm install`
 3. Start PostgreSQL: `docker compose -f docker-compose.db.yml up -d`
 4. Set up environment files by copying `.env.example` files in `apps/backend`, `apps/frontend`, and `apps/admin`
-5. Generate Prisma client: `pnpm run generate`
-6. Run migrations: `pnpm run migrate`
+5. Generate Prisma client: `pnpm run prisma:generate`
+6. Run migrations: `pnpm run prisma:migrate`
 7. Start all apps: `pnpm run dev`
+8. Start desktop or mobile: `pnpm run dev:desktop` / `pnpm run dev:mobile`
 
 Backend runs on port 3000, frontend on 5173, admin on 5174.
 

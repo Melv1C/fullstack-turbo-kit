@@ -10,6 +10,7 @@ A production-ready [Turborepo](https://turbo.build/repo) monorepo starter with f
 - **frontend** — [Vite](https://vitejs.dev/) + [React](https://react.dev/) application
 - **admin** — Vite + React admin application
 - **desktop** — [Electron](https://www.electronjs.org/) desktop application
+- **mobile** — [Expo](https://expo.dev/) React Native application
 
 ### Packages
 
@@ -60,4 +61,11 @@ Run all apps in development mode:
 
 ```bash
 pnpm run dev
+```
+
+Run desktop or mobile individually:
+
+```bash
+pnpm run dev:desktop
+pnpm run dev:mobile
 ```
