@@ -37,7 +37,7 @@ config.resolver = {
         type: 'sourceFile',
       };
     }
-    
+
     // Use default resolver
     return context.resolveRequest(context, moduleName, platform);
   },
