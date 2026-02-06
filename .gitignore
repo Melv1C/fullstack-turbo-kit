@@ -13,6 +13,7 @@ node_modules/
 build/
 dist/
 out/
+web-build/
 
 # Testing
 coverage/
@@ -42,3 +43,11 @@ generated/
 
 # Vite
 .vite/
+
+# Expo
+.expo/
+expo-env.d.ts
+
+# generated native folders
+apps/mobile/ios
+apps/mobile/android
