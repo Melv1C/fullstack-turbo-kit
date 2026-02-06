@@ -253,7 +253,7 @@ export function UserDetailSheet() {
           <SheetDescription>View and manage user information</SheetDescription>
         </SheetHeader>
 
-        <ScrollArea className="h-[calc(100vh-8rem)] px-6 pb-6">
+        <div className="px-6 pb-6 overflow-scroll">
           {user ? (
             <div className="space-y-6 pt-4">
               <UserInfo user={user} />
@@ -266,7 +266,7 @@ export function UserDetailSheet() {
               <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
             </div>
           )}
-        </ScrollArea>
+        </div>
       </SheetContent>
     </Sheet>
   );
