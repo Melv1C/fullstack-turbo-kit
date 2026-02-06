@@ -4,7 +4,6 @@ import {
   AvatarImage,
   Badge,
   Button,
-  ScrollArea,
   Sheet,
   SheetContent,
   SheetDescription,
