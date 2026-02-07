@@ -34,5 +34,5 @@
     "@esbuild/darwin-arm64": "^0.27.2",
     "@rollup/rollup-linux-x64-gnu": "4.57.1"
   },
-  "packageManager": "pnpm@10.28.2"
+  "packageManager": "pnpm@10.29.1"
 }
