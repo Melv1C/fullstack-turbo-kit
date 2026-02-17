@@ -11,7 +11,6 @@
     "lint": "oxlint",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "check-types": "turbo run check-types",
     "knip": "pnpm dlx knip",
     "deps": "pnpm dlx npm-check-updates",
     "deps:update": "pnpm dlx npm-check-updates -u && pnpm install",

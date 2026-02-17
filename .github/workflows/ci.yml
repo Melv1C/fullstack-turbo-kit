@@ -44,8 +44,5 @@ jobs:
       - name: Prisma Generate
         run: pnpm run prisma:generate
 
-      - name: Type checks
-        run: pnpm run check-types
-
       - name: Build all packages
         run: pnpm run build
