@@ -16,7 +16,6 @@ A production-ready [Turborepo](https://turbo.build/repo) monorepo starter with f
 
 - **@repo/api-client** — Shared API client for frontend-backend communication
 - **@repo/utils** — Shared utility functions and constants
-- **@repo/eslint-config** — ESLint configurations
 - **@repo/typescript-config** — TypeScript configurations
 - **@repo/ui** — Shared UI components and design system
 

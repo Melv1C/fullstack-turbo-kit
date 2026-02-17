@@ -2,8 +2,8 @@
   "name": "backend",
   "version": "0.0.0",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "scripts": {
     "dev": "concurrently \"tsdown --watch\" \"tsx watch src/index.ts\"",
     "build": "tsdown",
@@ -14,9 +14,7 @@
     "prisma:validate": "prisma validate",
     "prisma:format": "prisma format",
     "add-admin": "tsx scripts/add-admin.ts",
-    "sync-json-data": "tsx scripts/sync-json-data.ts",
-    "lint": "eslint . --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "sync-json-data": "tsx scripts/sync-json-data.ts"
   },
   "dependencies": {
     "@hono/node-server": "^1.19.9",
@@ -35,12 +33,10 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^25.2.0",
     "@types/pg": "^8.16.0",
     "concurrently": "^9.2.1",
-    "eslint": "^9.39.2",
     "prisma": "^7.3.0",
     "tsdown": "^0.16.6",
     "tsx": "^4.21.0",

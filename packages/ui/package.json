@@ -5,25 +5,19 @@
   "type": "module",
   "main": "src/index.ts",
   "types": "src/index.ts",
-  "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "check-types": "tsc --noEmit"
+  "dependencies": {
+    "@melv1c/ui-kit": "^1.5.0",
+    "lucide-react": "^0.563.0"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^25.2.0",
     "@types/react": "19.2.11",
     "@types/react-dom": "19.2.3",
-    "eslint": "^9.39.2",
     "typescript": "5.9.3"
   },
   "peerDependencies": {
     "react": "19.1.0",
     "react-dom": "19.1.0"
-  },
-  "dependencies": {
-    "@melv1c/ui-kit": "^1.5.0",
-    "lucide-react": "^0.563.0"
   }
 }

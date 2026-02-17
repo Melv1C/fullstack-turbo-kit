@@ -2,11 +2,10 @@
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
     "types": ["node"],
-    "baseUrl": ".",
     "outDir": "./dist",
     "paths": {
-      "@/*": ["src/*"],
-      "@generated/*": ["generated/*"]
+      "@/*": ["./src/*"],
+      "@generated/*": ["./generated/*"]
     }
   },
   "include": ["src", "scripts"]
