@@ -2,8 +2,8 @@
   "name": "backend",
   "version": "0.0.0",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "scripts": {
     "dev": "concurrently \"tsdown --watch\" \"tsx watch src/index.ts\"",
     "build": "tsdown",
@@ -14,8 +14,7 @@
     "prisma:validate": "prisma validate",
     "prisma:format": "prisma format",
     "add-admin": "tsx scripts/add-admin.ts",
-    "sync-json-data": "tsx scripts/sync-json-data.ts",
-    "check-types": "tsc --noEmit"
+    "sync-json-data": "tsx scripts/sync-json-data.ts"
   },
   "dependencies": {
     "@hono/node-server": "^1.19.9",
