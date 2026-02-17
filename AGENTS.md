@@ -11,7 +11,7 @@ A Turborepo monorepo with a Hono backend API, two React+Vite frontends (user and
 - **Backend**: Hono + Node, Prisma (PostgreSQL), better-auth
 - **Frontend/Admin**: React 19, Vite, TanStack Router, TanStack Query
 - **UI**: Tailwind CSS 4, @melv1c/ui-kit
-- **Linting**: ESLint (flat config), Prettier
+- **Linting**: Oxlint, Oxfmt
 - **Type system**: TypeScript (strict mode)
 - **Database**: PostgreSQL (via Docker)
 
@@ -61,7 +61,6 @@ packages/
   api-client/               # Shared API client (@repo/api-client)
   ui/                       # Shared UI components (@repo/ui)
   utils/                    # Shared utilities and schemas (@repo/utils)
-  eslint-config/            # ESLint configurations
   typescript-config/        # TypeScript configurations
 ```
 
@@ -95,8 +94,8 @@ Backend runs on port 3000, frontend on 5173, admin on 5174.
 
 ## Code Conventions
 
-- ESLint with TypeScript rules (`pnpm run lint`)
-- Prettier for formatting (`pnpm run format`)
+- Oxlint for linting (`pnpm run lint`)
+- Oxfmt for formatting (`pnpm run format`)
 - TypeScript strict mode across all packages
 
 ## Build & CI
