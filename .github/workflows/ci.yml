@@ -32,9 +32,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Linting
-        run: pnpm run lint
-
       - name: Format check
         run: pnpm run format:check
 
@@ -43,6 +40,9 @@ jobs:
 
       - name: Prisma Generate
         run: pnpm run prisma:generate
+
+      - name: Linting
+        run: pnpm run lint
 
       - name: Build all packages
         run: pnpm run build
