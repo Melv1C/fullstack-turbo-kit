@@ -3,7 +3,14 @@
   "version": "0.0.0",
   "type": "module",
   "main": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    }
+  },
   "scripts": {
     "dev": "concurrently \"tsdown --watch\" \"tsx watch src/index.ts\"",
     "build": "tsdown",
