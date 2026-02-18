@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "type": "module",
   "main": "./dist/index.mjs",
-  "types": "./src/index.ts",
+  "types": "./src/index.d.mts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
+      "types": "./src/index.d.mts",
       "import": "./dist/index.mjs",
       "default": "./dist/index.mjs"
     }
