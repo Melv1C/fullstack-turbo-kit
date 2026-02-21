@@ -7,6 +7,8 @@ echo
 echo "📦 Running changeset version..."
 npx changeset version
 
+sleep 1
+
 DATETIME=$(date +"%d-%m-%Y %H:%M:%S")
 echo "📝 Committing release changes ($DATETIME)..."
 git commit -am "release: $DATETIME"
