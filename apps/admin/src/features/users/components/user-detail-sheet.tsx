@@ -9,7 +9,7 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from '@melv1c/ui-kit';
+} from '@melv1c/ui-core';
 import { User as UserType } from '@repo/utils';
 import {
   AlertCircle,

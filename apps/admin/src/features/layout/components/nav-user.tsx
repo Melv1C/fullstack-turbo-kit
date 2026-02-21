@@ -12,7 +12,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from '@melv1c/ui-kit';
+} from '@melv1c/ui-core';
 import { useNavigate } from '@tanstack/react-router';
 import { ChevronsUpDown, LogOut, User } from 'lucide-react';
 

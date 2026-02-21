@@ -13,7 +13,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@melv1c/ui-kit';
+} from '@melv1c/ui-core';
 import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useBanUser, useUsers } from '../use-users';

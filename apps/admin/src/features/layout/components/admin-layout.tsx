@@ -7,7 +7,7 @@ import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from '@melv1c/ui-kit';
+} from '@melv1c/ui-core';
 import { Outlet, useRouterState } from '@tanstack/react-router';
 import { Database, FileText, LayoutDashboard, Users } from 'lucide-react';
 import type { NavItem } from '../type';

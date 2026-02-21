@@ -9,7 +9,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@melv1c/ui-kit';
+} from '@melv1c/ui-core';
 import { Logo } from '@repo/ui';
 import { APP_NAME } from '@repo/utils';
 import { Link, useRouterState } from '@tanstack/react-router';

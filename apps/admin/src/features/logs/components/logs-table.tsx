@@ -11,7 +11,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@melv1c/ui-kit';
+} from '@melv1c/ui-core';
 import { AlertCircle, ChevronLeft, ChevronRight, Info, Loader2 } from 'lucide-react';
 import { useLogs } from '../hooks/use-logs';
 import { useLogsStore } from '../logs-store';

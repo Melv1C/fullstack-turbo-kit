@@ -7,7 +7,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@melv1c/ui-kit';
+} from '@melv1c/ui-core';
 import { Loader2 } from 'lucide-react';
 import { useRemoveUser, useUsers } from '../use-users';
 import { useUsersStore } from '../users-store';

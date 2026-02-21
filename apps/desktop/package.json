@@ -14,7 +14,7 @@
     "publish": "electron-forge publish"
   },
   "dependencies": {
-    "@melv1c/ui-kit": "^1.5.0",
+    "@melv1c/ui-core": "^1.1.0",
     "@repo/api-client": "workspace:*",
     "@repo/ui": "workspace:*",
     "@repo/utils": "workspace:*",

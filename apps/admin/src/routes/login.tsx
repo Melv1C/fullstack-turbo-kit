@@ -1,5 +1,5 @@
 import { signIn } from '@/lib/auth-client';
-import { LoginForm } from '@melv1c/ui-kit';
+import { LoginForm } from '@melv1c/ui-core';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/login')({

@@ -10,7 +10,7 @@ A Turborepo monorepo with a Hono backend API, two React+Vite frontends (user and
 - **Monorepo**: Turborepo
 - **Backend**: Hono + Node, Prisma (PostgreSQL), better-auth
 - **Frontend/Admin**: React 19, Vite, TanStack Router, TanStack Query
-- **UI**: Tailwind CSS 4, @melv1c/ui-kit
+- **UI**: Tailwind CSS 4, @melv1c/ui-core
 - **Linting**: Oxlint, Oxfmt
 - **Type system**: TypeScript (strict mode)
 - **Database**: PostgreSQL (via Docker)

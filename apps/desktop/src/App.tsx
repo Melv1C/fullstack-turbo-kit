@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, CardHeader, CardTitle, UIKitProvider } from '@melv1c/ui-kit';
+import { Button, Card, CardContent, CardHeader, CardTitle, UICoreProvider } from '@melv1c/ui-core';
 import { CardHealth } from '@repo/ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -238,9 +238,9 @@ function AppContent() {
 export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <UIKitProvider>
+      <UICoreProvider>
         <AppContent />
-      </UIKitProvider>
+      </UICoreProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

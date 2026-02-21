@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, CardHeader, CardTitle } from '@melv1c/ui-kit';
+import { Button, Card, CardContent, CardHeader, CardTitle } from '@melv1c/ui-core';
 import { Activity, CheckCircle, RefreshCw, Server, XCircle } from 'lucide-react';
 
 type CardHealthProps = React.ComponentProps<typeof Card> & {

@@ -1,6 +1,6 @@
 import { signOut } from '@/lib/auth-client';
 import { env } from '@/lib/env';
-import { Button } from '@melv1c/ui-kit';
+import { Button } from '@melv1c/ui-core';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/unauthorized')({

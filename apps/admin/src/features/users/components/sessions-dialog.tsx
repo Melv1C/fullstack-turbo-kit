@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   ScrollArea,
-} from '@melv1c/ui-kit';
+} from '@melv1c/ui-core';
 import { AlertCircle, Clock, Globe, Loader2, Monitor, Trash2 } from 'lucide-react';
 import { formatRelativeTime } from '../constants';
 import { useRevokeAllSessions, useRevokeSession, useUserSessions, useUsers } from '../use-users';
