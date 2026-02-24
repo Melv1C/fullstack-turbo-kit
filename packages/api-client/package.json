@@ -18,11 +18,11 @@
   },
   "dependencies": {
     "backend": "workspace:*",
-    "hono": "^4.11.7"
+    "hono": "^4.12.2"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "tsdown": "^0.16.6",
+    "tsdown": "^0.20.3",
     "typescript": "^5.9.3"
   }
 }
