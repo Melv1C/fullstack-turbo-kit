@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "tsdown",
-    "dev": "tsdown --watch"
+    "dev": "tsdown --watch --no-clean"
   },
   "dependencies": {
     "@melv1c/ui-core": "^1.1.2",
