@@ -1,6 +1,6 @@
 import { useAPIHealth } from '@/hooks/use-api-health';
 import { env } from '@/lib/env';
-import { APP_NAME, APP_VERSION } from '@repo/utils';
+import { APP_NAME } from '@repo/utils';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
 export default function Index() {
@@ -8,9 +8,7 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        {APP_NAME} v{APP_VERSION}
-      </Text>
+      <Text style={styles.title}>{APP_NAME}</Text>
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>API Health Check</Text>

@@ -1,7 +1,7 @@
 import { useAPIHealth } from '@/features/api-health';
+import { APP_VERSION } from '@/lib/app-version';
 import { env } from '@/lib/env';
 import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from '@melv1c/ui-core';
-import { APP_VERSION } from '@repo/utils';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Activity,
