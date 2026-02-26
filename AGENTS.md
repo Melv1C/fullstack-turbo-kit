@@ -1,7 +1,3 @@
-# AGENTS.md
-
-## Project Overview
-
 A Turborepo monorepo with a Hono backend API, two React+Vite frontends (user and admin), and desktop/mobile clients plus shared packages for UI, utils, and API client.
 
 ## Stack
@@ -14,55 +10,6 @@ A Turborepo monorepo with a Hono backend API, two React+Vite frontends (user and
 - **Linting**: Oxlint, Oxfmt
 - **Type system**: TypeScript (strict mode)
 - **Database**: PostgreSQL (via Docker)
-
-## Repository Structure
-
-```
-apps/
-  backend/                  # Hono API server
-    generated/prisma/       # Prisma client (custom output path)
-    prisma/
-      schema.prisma
-      migrations/
-    scripts/
-      add-admin.ts          # Create admin users
-      sync-json-data.ts     # Sync JSON data to DB
-    src/
-      index.ts
-      lib/                  # Auth, env, logger, Prisma setup
-      middlewares/          # Auth and logger middleware
-      routes/               # API routes
-  frontend/                 # User-facing Vite + React app (port 5173)
-    src/
-      features/             # Feature-based organization
-      lib/                  # API client, auth client, env
-      routes/               # TanStack Router routes
-      routeTree.gen.ts      # Auto-generated route tree
-  admin/                    # Admin Vite + React app (port 5174)
-    src/
-      features/             # Feature-based organization
-      lib/                  # API client, auth client, env
-      routes/               # TanStack Router routes
-      routeTree.gen.ts      # Auto-generated route tree
-  desktop/                  # Electron desktop app
-    src/
-      main.ts               # Electron main process
-      preload.ts            # Preload script
-      renderer.tsx          # React entry point
-      bridge/               # Electron-React bridge
-      lib/                  # API client, auth client, env
-      features/             # Feature-based organization
-  mobile/                   # Expo React Native app
-    src/
-      app/
-      hooks/
-      lib/
-packages/
-  api-client/               # Shared API client (@repo/api-client)
-  ui/                       # Shared UI components (@repo/ui)
-  utils/                    # Shared utilities and schemas (@repo/utils)
-  typescript-config/        # TypeScript configurations
-```
 
 ### Features-Based Organization
 
@@ -79,36 +26,15 @@ src/
       index.ts          # Exports components, hooks, utils for outer use
 ```
 
-## Dev Environment
+## Scripts
 
-1. Use Node version specified in `.nvmrc`
-2. Install dependencies: `pnpm install`
-3. Start PostgreSQL: `docker compose -f docker-compose.db.yml up -d`
-4. Set up environment files by copying `.env.example` files in `apps/backend`, `apps/frontend`, and `apps/admin`
-5. Generate Prisma client: `pnpm run prisma:generate`
-6. Run migrations: `pnpm run prisma:migrate`
-7. Start all apps: `pnpm run dev`
-8. Start desktop or mobile: `pnpm run dev:desktop` / `pnpm run dev:mobile`
+- `pnpm run build` - Build all packages
+- `pnpm lint` - Run Oxlint on all packages
+- `pnpm format` - Run Oxfmt on all packages
+- `pnpm run prisma:generate` - Generate Prisma client
+- `pnpm run prisma:migrate` - Run Prisma migrations
+- `pnpm run prisma:format` - Format Prisma schema
+
+Assume that the development environment is already running. Do not execute any `pnpm dev` commands, and proceed as if the applications are directly accessible in the browser.
 
 Backend runs on port 3000, frontend on 5173, admin on 5174.
-
-## Code Conventions
-
-- Oxlint for linting (`pnpm run lint`)
-- Oxfmt for formatting (`pnpm run format`)
-- TypeScript strict mode across all packages
-
-## Build & CI
-
-- Build: `pnpm run build` (builds all apps and packages in dependency order)
-- CI runs: lint, format check, type check, Prisma validation, build
-- CI requires `DATABASE_URL` environment variable
-- GitHub Actions on PRs and pushes to `main`
-
-## Monorepo Structure
-
-- Turborepo manages task orchestration
-- Workspace packages use `*` for local dependencies
-- Backend Prisma output goes to `generated/prisma` (not default location)
-- Shared packages: `@repo/api-client`, `@repo/utils`, `@repo/ui`, config packages
-- All apps and packages are TypeScript modules (`"type": "module"`)
