@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "build": "turbo run build",
+    "build:local": "turbo run build:local",
+    "build:staging": "turbo run build:staging",
+    "build:production": "turbo run build:production",
     "dev": "turbo run dev",
     "dev:desktop": "pnpm --filter desktop start",
     "dev:mobile": "pnpm --filter mobile start",

@@ -23,6 +23,13 @@ jobs:
     strategy:
       matrix:
         app: [admin, backend, frontend]
+        include:
+          - app: admin
+            build_args: APP_ENV=staging
+          - app: backend
+            build_args: ''
+          - app: frontend
+            build_args: APP_ENV=staging
 
     steps:
       - name: Checkout code
@@ -49,6 +56,7 @@ jobs:
           context: .
           file: ./apps/${{ matrix.app }}/Dockerfile
           push: true
+          build-args: ${{ matrix.build_args }}
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.read-name.outputs.app_name }}-${{ matrix.app }}:staging
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.read-name.outputs.app_name }}-${{ matrix.app }}:${{ github.sha }}

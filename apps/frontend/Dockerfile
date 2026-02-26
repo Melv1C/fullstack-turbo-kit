@@ -28,13 +28,12 @@ COPY --from=installer /app/ .
 # Copy source files
 COPY --from=prepare /app/out/full/ .
 
-# Copy the Docker-specific environment file
-COPY apps/frontend/.env.docker apps/frontend/.env
+ARG APP_ENV=production
 
 # Build the frontend
 ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres"
 RUN pnpm run prisma:generate
-RUN pnpm build --filter=frontend
+RUN pnpm run build:${APP_ENV} --filter=frontend
 
 # ---
 FROM nginx:alpine AS runner
@@ -43,6 +42,11 @@ COPY --from=builder /app/apps/frontend/dist /usr/share/nginx/html
 
 # Copy nginx configuration
 COPY apps/frontend/nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy runtime env script and make it executable
+# This script runs on container startup to replace MY_APP_* placeholders
+COPY apps/frontend/env.sh /docker-entrypoint.d/env.sh
+RUN chmod +x /docker-entrypoint.d/env.sh
 
 # Copy runtime env script and make it executable
 # This script runs on container startup to replace MY_APP_* placeholders

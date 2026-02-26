@@ -33,10 +33,28 @@ Copy the example environment variables:
 
 ```bash
 cp apps/backend/.env.example apps/backend/.env
-cp apps/frontend/.env.example apps/frontend/.env
-cp apps/admin/.env.example apps/admin/.env
 cp apps/desktop/.env.example apps/desktop/.env
 ```
+
+Frontend and admin environment profiles are versioned in Git and are intentionally public:
+
+- `apps/frontend/.env.local`
+- `apps/frontend/.env.staging`
+- `apps/frontend/.env.production`
+- `apps/admin/.env.local`
+- `apps/admin/.env.staging`
+- `apps/admin/.env.production`
+
+Use explicit build modes for web apps:
+
+```bash
+pnpm --filter frontend run build:staging
+pnpm --filter frontend run build:production
+pnpm --filter admin run build:staging
+pnpm --filter admin run build:production
+```
+
+Only backend env values are sensitive (for example: `DATABASE_URL`, `BETTER_AUTH_SECRET`) and must never be committed.
 
 Start the development database (PostgreSQL):
 
