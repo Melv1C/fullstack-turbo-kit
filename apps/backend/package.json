@@ -20,8 +20,8 @@
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:validate": "prisma validate",
     "prisma:format": "prisma format",
-    "add-admin": "tsx scripts/add-admin.ts",
-    "sync-json-data": "tsx scripts/sync-json-data.ts"
+    "add-admin": "node ./dist/add-admin.mjs",
+    "sync-json-data": "node ./dist/sync-json-data.mjs"
   },
   "dependencies": {
     "@hono/node-server": "^1.19.9",
