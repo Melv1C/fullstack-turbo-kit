@@ -23,7 +23,7 @@
     "prisma:migrate:deploy": "pnpm run --filter backend prisma:migrate:deploy",
     "prisma:validate": "pnpm run --filter backend prisma:validate",
     "prisma:format": "pnpm run --filter backend prisma:format",
-    "release:prepare": "npx changeset",
+    "release:prepare": "pnpm dlx changeset",
     "release:publish": "./scripts/release.sh"
   },
   "devDependencies": {
